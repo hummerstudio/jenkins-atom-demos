@@ -4,13 +4,13 @@ pipeline {
     stage('test') {
       steps {
         // a stale workspace is how a demo reports six tests instead of three
-        runAtom(atom: 'ws-cleanup', inputs: [patterns: '**', deleteDirs: 'true'])
-        runAtom(atom: 'git-checkout', inputs: [url: env.GIT_URL ?: 'file:///Users/ming/repos/jenkins-atom-demos.git', branch: 'main'])
+        runAtom(atom: 'ws-cleanup', version: '1.2.0', inputs: [patterns: '**', deleteDirs: 'true'])
+        runAtom(atom: 'git-checkout', version: '1.0.0', inputs: [url: env.GIT_URL ?: 'file:///Users/ming/repos/jenkins-atom-demos.git', branch: 'main'])
         dir('stacks/python-pytest') {
-          runAtom(atom: 'python-env', inputs: [requirements: 'requirements.txt'])
-          runAtom(atom: 'python-env', inputs: [command: 'python -m pytest'])
-          runAtom(atom: 'junit-report', inputs: [testResults: 'reports/junit.xml'])
-          runAtom(atom: 'files-tool', inputs: [operation: 'find', pattern: 'src/**/*.py'])
+          runAtom(atom: 'python-env', version: '1.0.0', inputs: [requirements: 'requirements.txt'])
+          runAtom(atom: 'python-env', version: '1.0.0', inputs: [command: 'python -m pytest'])
+          runAtom(atom: 'junit-report', version: '1.3.0', inputs: [testResults: 'reports/junit.xml'])
+          runAtom(atom: 'files-tool', version: '1.2.0', inputs: [operation: 'find', pattern: 'src/**/*.py'])
         }
       }
     }

@@ -4,13 +4,13 @@ pipeline {
     stage('test') {
       steps {
         // a stale workspace is how a demo reports six tests instead of three
-        runAtom(atom: 'ws-cleanup', inputs: [patterns: '**', deleteDirs: 'true'])
-        runAtom(atom: 'git-checkout', inputs: [url: env.GIT_URL ?: 'file:///Users/ming/repos/jenkins-atom-demos.git', branch: 'main'])
+        runAtom(atom: 'ws-cleanup', version: '1.2.0', inputs: [patterns: '**', deleteDirs: 'true'])
+        runAtom(atom: 'git-checkout', version: '1.0.0', inputs: [url: env.GIT_URL ?: 'file:///Users/ming/repos/jenkins-atom-demos.git', branch: 'main'])
         dir('stacks/node-tap') {
-          runAtom(atom: 'node', inputs: [command: 'npm test'])
-          runAtom(atom: 'junit-report', inputs: [testResults: 'reports/junit.xml'])
-          runAtom(atom: 'node', inputs: [command: 'npm run build'])
-          runAtom(atom: 'zip-artifacts', inputs: [operation: 'zip', archive: 'out/dist.zip', includes: 'dist/**'])
+          runAtom(atom: 'node', version: '1.1.0', inputs: [command: 'npm test'])
+          runAtom(atom: 'junit-report', version: '1.3.0', inputs: [testResults: 'reports/junit.xml'])
+          runAtom(atom: 'node', version: '1.1.0', inputs: [command: 'npm run build'])
+          runAtom(atom: 'zip-artifacts', version: '1.0.0', inputs: [operation: 'zip', archive: 'out/dist.zip', includes: 'dist/**'])
         }
       }
     }

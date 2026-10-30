@@ -4,12 +4,12 @@ pipeline {
     stage('build and test') {
       steps {
         // a stale workspace is how a demo reports six tests instead of three
-        runAtom(atom: 'ws-cleanup', inputs: [patterns: '**', deleteDirs: 'true'])
-        runAtom(atom: 'git-checkout', inputs: [url: env.GIT_URL ?: 'file:///Users/ming/repos/jenkins-atom-demos.git', branch: 'main'])
+        runAtom(atom: 'ws-cleanup', version: '1.2.0', inputs: [patterns: '**', deleteDirs: 'true'])
+        runAtom(atom: 'git-checkout', version: '1.0.0', inputs: [url: env.GIT_URL ?: 'file:///Users/ming/repos/jenkins-atom-demos.git', branch: 'main'])
         dir('stacks/java-maven') {
-          runAtom(atom: 'maven', inputs: [goals: 'clean verify', options: '-B -ntp'])
-          runAtom(atom: 'junit-report', inputs: [testResults: '**/surefire-reports/TEST-*.xml'])
-          runAtom(atom: 'artifact-size', inputs: [pattern: '**/target/*.jar', maxMb: '50'])
+          runAtom(atom: 'maven', version: '1.2.0', inputs: [goals: 'clean verify', options: '-B -ntp'])
+          runAtom(atom: 'junit-report', version: '1.3.0', inputs: [testResults: '**/surefire-reports/TEST-*.xml'])
+          runAtom(atom: 'artifact-size', version: '1.1.0', inputs: [pattern: '**/target/*.jar', maxMb: '50'])
         }
       }
     }

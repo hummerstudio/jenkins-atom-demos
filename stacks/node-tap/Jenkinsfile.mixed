@@ -8,9 +8,9 @@ pipeline {
       steps {
         dir('stacks/node-tap') {
           sh 'npm test'
-          runAtom(atom: 'junit-report', inputs: [testResults: 'reports/junit.xml'])
+          runAtom(atom: 'junit-report', version: '1.3.0', inputs: [testResults: 'reports/junit.xml'])
           sh 'npm run build'
-          runAtom(atom: 'zip-artifacts', inputs: [operation: 'zip', archive: 'out/dist.zip', includes: 'dist/**'])
+          runAtom(atom: 'zip-artifacts', version: '1.0.0', inputs: [operation: 'zip', archive: 'out/dist.zip', includes: 'dist/**'])
         }
       }
     }
