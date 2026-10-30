@@ -3,6 +3,8 @@ pipeline {
   stages {
     stage('build and test') {
       steps {
+        // a stale workspace is how a demo reports six tests instead of three
+        runAtom(atom: 'ws-cleanup', inputs: [deleteDirs: 'true'])
         runAtom(atom: 'git-checkout', inputs: [url: env.GIT_URL ?: 'file:///Users/ming/repos/jenkins-atom-demos.git', branch: 'main'])
         dir('stacks/cpp-cmake') {
           runAtom(atom: 'cmake-build', inputs: [buildType: 'Debug', jobs: '4', runTests: 'true',
