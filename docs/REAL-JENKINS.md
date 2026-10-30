@@ -92,3 +92,19 @@ git init --bare ~/repos/jenkins-atom-demos.git && git push ssh://ming@10.161.8.2
 ```
 
 `~/jenkins-real/init.groovy.d/` 里四个脚本：开 autoInstall 并指向 loopback 中心、2 个 executor、关鉴权、给内置节点补 PATH（maven/node/pip/cmake）。
+
+## 一键启停（`tools/jenkins-rehearsal/`）
+
+```bash
+tools/jenkins-rehearsal/start.sh            # (重)启动：先把中心镜像挂到 :8099，再拉起 Jenkins
+tools/jenkins-rehearsal/start.sh status     # 在跑吗、八个 job 最后一次结果
+tools/jenkins-rehearsal/start.sh restart
+tools/jenkins-rehearsal/start.sh stop
+```
+
+`init.groovy.d/` 四个脚本随仓库走（autoInstall + loopback 中心、2 executor、关鉴权、给内置节点补 PATH），
+配置随实例走，重启不掉。
+
+一个不起眼但会浪费半天的点：**`nohup … &` 不足以脱离 ssh**。子进程仍留在 ssh 会话里，sshd 会一直等着它，
+`ssh host ./start.sh restart` 看起来像卡死（其实服务早起来了）。`start.sh` 通过 `detach.py` 用
+`start_new_session=True` 起新会话，重启从「卡 7 分钟」变成 8 秒返回。
