@@ -57,8 +57,9 @@ JENKINS_HOME=~/jenkins-real \
 
 ## 真环境才暴露的四个 bug（都已修）
 
-1. `runAtom` 强制要求 `version`，declarative 直接编译报错 `Missing required parameter: "version"`。
-   → `version` 改成 `@DataBoundSetter`，省略即 stable 通道。
+1. `runAtom` 的 `version` 是**必填**（构造参数，刻意如此）：它决定这一跑的是哪个版本，省略就等于"跑 stable 此刻指向的东西"，
+   构建不可复现。declarative 会在编译期报 `Missing required parameter: "version"`；运行时拿到空的也直接 AbortException，
+   提示写 `version: '1.2.0'` 或显式 `version: 'stable'`。demo 的八条流水线因此都钉了具体版本。
 2. `AtomCenter.findVersion` 对 null version 调 `version.equals(...)` → NPE。
 3. `resolve(null)` 一路落到目录查找，最后炸在 `FilePath.child(null)`：`Cannot invoke "String.startsWith(String)" because "rel" is null`。
    → null/blank 归一成 `stable`，`atomDirectory` 改成明确的 `IllegalStateException`。
