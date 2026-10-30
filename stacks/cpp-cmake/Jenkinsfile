@@ -5,7 +5,7 @@ pipeline {
       steps {
         runAtom(atom: 'cmake-build', inputs: [buildType: 'Debug', runTests: 'true',
                                               testArgs: '--output-junit reports/ctest.xml'])
-        runAtom(atom: 'junit-report', inputs: [testResults: 'reports/ctest.xml'])
+        runAtom(atom: 'junit-report', inputs: [testResults: 'build/reports/ctest.xml'])
       }
     }
   }

@@ -86,7 +86,7 @@ stack_cpp() {
   local dir="$WORK/cpp-cmake"; mkdir -p "$dir"
   cp -R "$DEMOS/stacks/cpp-cmake/." "$dir/"
   run_atom cmake-build "$dir" '{"buildType": "Debug", "runTests": "true", "testArgs": "--output-junit reports/ctest.xml"}'
-  run_atom junit-report "$dir" '{"testResults": "reports/ctest.xml"}'
+  run_atom junit-report "$dir" '{"testResults": "build/reports/ctest.xml"}'
 }
 
 run_stack() { # run_stack <name>
