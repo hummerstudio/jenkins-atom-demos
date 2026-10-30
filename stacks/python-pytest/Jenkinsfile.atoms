@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('test') {
       steps {
-        runAtom(atom: 'git-checkout', inputs: [url: env.GIT_URL, branch: env.GIT_BRANCH])
+        runAtom(atom: 'git-checkout', inputs: [url: env.GIT_URL ?: 'file:///Users/ming/repos/jenkins-atom-demos.git', branch: 'main'])
         runAtom(atom: 'python-env', inputs: [requirements: 'requirements.txt'])
         runAtom(atom: 'python-env', inputs: [command: 'python -m pytest'])
         runAtom(atom: 'junit-report', inputs: [testResults: 'reports/junit.xml'])

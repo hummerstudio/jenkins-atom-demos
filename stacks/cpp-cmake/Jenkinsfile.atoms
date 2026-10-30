@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('build and test') {
       steps {
-        runAtom(atom: 'git-checkout', inputs: [url: env.GIT_URL, branch: env.GIT_BRANCH])
+        runAtom(atom: 'git-checkout', inputs: [url: env.GIT_URL ?: 'file:///Users/ming/repos/jenkins-atom-demos.git', branch: 'main'])
         runAtom(atom: 'cmake-build', inputs: [buildType: 'Debug', jobs: '4', runTests: 'true',
                                               testArgs: '--output-junit reports/ctest.xml'])
         runAtom(atom: 'junit-report', inputs: [testResults: 'build/reports/ctest.xml'])
