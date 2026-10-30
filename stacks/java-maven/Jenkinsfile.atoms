@@ -4,7 +4,7 @@ pipeline {
     stage('build and test') {
       steps {
         // a stale workspace is how a demo reports six tests instead of three
-        runAtom(atom: 'ws-cleanup', inputs: [deleteDirs: 'true'])
+        runAtom(atom: 'ws-cleanup', inputs: [patterns: '**', deleteDirs: 'true'])
         runAtom(atom: 'git-checkout', inputs: [url: env.GIT_URL ?: 'file:///Users/ming/repos/jenkins-atom-demos.git', branch: 'main'])
         dir('stacks/java-maven') {
           runAtom(atom: 'maven', inputs: [goals: 'clean verify', options: '-B -ntp'])
