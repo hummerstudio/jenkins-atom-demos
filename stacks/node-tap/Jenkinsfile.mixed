@@ -1,0 +1,18 @@
+pipeline {
+  agent any
+  stages {
+    stage('checkout') {
+      steps { checkout scm }
+    }
+    stage('run') {
+      steps {
+        dir('stacks/node-tap') {
+          sh 'npm test'
+          runAtom(atom: 'junit-report', inputs: [testResults: 'reports/junit.xml'])
+          sh 'npm run build'
+          runAtom(atom: 'zip-artifacts', inputs: [operation: 'zip', archive: 'out/dist.zip', includes: 'dist/**'])
+        }
+      }
+    }
+  }
+}

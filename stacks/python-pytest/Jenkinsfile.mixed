@@ -1,0 +1,18 @@
+pipeline {
+  agent any
+  stages {
+    stage('checkout') {
+      steps { checkout scm }
+    }
+    stage('run') {
+      steps {
+        dir('stacks/python-pytest') {
+          sh 'python3 -m venv .venv && .venv/bin/pip install -q -r requirements.txt'
+          sh '.venv/bin/python -m pytest'
+          runAtom(atom: 'junit-report', inputs: [testResults: 'reports/junit.xml'])
+          runAtom(atom: 'files-tool', inputs: [operation: 'find', pattern: 'src/**/*.py'])
+        }
+      }
+    }
+  }
+}

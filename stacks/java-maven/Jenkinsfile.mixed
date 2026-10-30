@@ -1,0 +1,17 @@
+pipeline {
+  agent any
+  stages {
+    stage('checkout') {
+      steps { checkout scm }
+    }
+    stage('run') {
+      steps {
+        dir('stacks/java-maven') {
+          sh 'mvn -B -ntp clean verify'
+          runAtom(atom: 'junit-report', inputs: [testResults: '**/surefire-reports/TEST-*.xml'])
+          runAtom(atom: 'artifact-size', inputs: [pattern: '**/target/*.jar', maxMb: '50'])
+        }
+      }
+    }
+  }
+}

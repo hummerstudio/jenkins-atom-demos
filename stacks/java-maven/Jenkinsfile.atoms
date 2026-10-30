@@ -1,0 +1,13 @@
+pipeline {
+  agent any
+  stages {
+    stage('build and test') {
+      steps {
+        runAtom(atom: 'git-checkout', inputs: [url: env.GIT_URL, branch: env.GIT_BRANCH])
+        runAtom(atom: 'maven', inputs: [goals: 'clean verify', options: '-B -ntp'])
+        runAtom(atom: 'junit-report', inputs: [testResults: '**/surefire-reports/TEST-*.xml'])
+        runAtom(atom: 'artifact-size', inputs: [pattern: '**/target/*.jar', maxMb: '50'])
+      }
+    }
+  }
+}
