@@ -3,8 +3,8 @@ pipeline {
   stages {
     stage('build and test') {
       steps {
+        runAtom(atom: 'git-checkout', inputs: [url: env.GIT_URL ?: 'file:///Users/ming/repos/jenkins-atom-demos.git', branch: 'main'])
         dir('stacks/java-maven') {
-          runAtom(atom: 'git-checkout', inputs: [url: env.GIT_URL ?: 'file:///Users/ming/repos/jenkins-atom-demos.git', branch: 'main'])
           runAtom(atom: 'maven', inputs: [goals: 'clean verify', options: '-B -ntp'])
           runAtom(atom: 'junit-report', inputs: [testResults: '**/surefire-reports/TEST-*.xml'])
           runAtom(atom: 'artifact-size', inputs: [pattern: '**/target/*.jar', maxMb: '50'])
