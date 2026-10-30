@@ -1,0 +1,13 @@
+pipeline {
+  agent any
+  stages {
+    stage('test') {
+      steps {
+        runAtom(atom: 'python-env', inputs: [requirements: 'requirements.txt'])
+        runAtom(atom: 'python-env', inputs: [command: 'python -m pytest'])
+        runAtom(atom: 'junit-report', inputs: [testResults: 'reports/junit.xml'])
+        runAtom(atom: 'files-tool', inputs: [operation: 'find', pattern: 'src/**/*.py'])
+      }
+    }
+  }
+}

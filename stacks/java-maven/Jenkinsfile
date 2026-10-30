@@ -1,0 +1,12 @@
+pipeline {
+  agent any
+  stages {
+    stage('build') {
+      steps {
+        runAtom(atom: 'maven', inputs: [goals: 'clean verify', home: '/opt/maven'])
+        runAtom(atom: 'junit-report', inputs: [testResults: '**/surefire-reports/TEST-*.xml'])
+        runAtom(atom: 'artifact-size', inputs: [pattern: '**/target/*.jar', maxMb: '50'])
+      }
+    }
+  }
+}

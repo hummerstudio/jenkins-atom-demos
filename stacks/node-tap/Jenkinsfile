@@ -1,0 +1,13 @@
+pipeline {
+  agent any
+  stages {
+    stage('test') {
+      steps {
+        runAtom(atom: 'node', inputs: [command: 'npm test'])
+        runAtom(atom: 'junit-report', inputs: [testResults: 'reports/junit.xml'])
+        runAtom(atom: 'node', inputs: [command: 'npm run build'])
+        runAtom(atom: 'zip-artifacts', inputs: [operation: 'zip', archive: 'out/dist.zip', includes: 'dist/**'])
+      }
+    }
+  }
+}

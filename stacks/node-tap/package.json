@@ -1,0 +1,10 @@
+{
+  "name": "calc-node",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "mkdir -p reports && node --test --test-reporter=junit --test-reporter-destination=reports/junit.xml",
+    "build": "mkdir -p dist && cp src/calc.js dist/calc.js"
+  }
+}

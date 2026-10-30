@@ -1,0 +1,8 @@
+[project]
+name = "calc-py"
+version = "1.0.0"
+requires-python = ">=3.9"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--junitxml=reports/junit.xml -q"
