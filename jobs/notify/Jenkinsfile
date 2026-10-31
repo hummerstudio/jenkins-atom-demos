@@ -1,0 +1,22 @@
+// 协作通知族的演练：不连真的 Slack，而是发到本机一个假端点，断言报文真的到达。
+//   python3 tools/fake_chat.py 8123 /tmp/chat.log &   （在 Jenkins 那台机器上）
+pipeline {
+  agent any
+  stages {
+    stage('notify') {
+      steps {
+        runAtom(atom: 'chat-notify', version: '1.0.0', inputs: [
+          provider: 'slack',
+          webhookUrl: 'http://127.0.0.1:8123/services/T000/B000/XXXX',
+          text: "demo build ${env.BUILD_NUMBER} finished",
+        ])
+        runAtom(atom: 'chat-notify', version: '1.0.0', inputs: [
+          provider: 'dingtalk',
+          webhookUrl: 'http://127.0.0.1:8123/robot/send?access_token=demo',
+          secret: 'SECdemo',
+          text: "钉钉：构建 ${env.BUILD_NUMBER}",
+        ])
+      }
+    }
+  }
+}
