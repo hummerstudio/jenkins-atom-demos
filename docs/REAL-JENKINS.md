@@ -109,3 +109,51 @@ tools/jenkins-rehearsal/start.sh stop
 一个不起眼但会浪费半天的点：**`nohup … &` 不足以脱离 ssh**。子进程仍留在 ssh 会话里，sshd 会一直等着它，
 `ssh host ./start.sh restart` 看起来像卡死（其实服务早起来了）。`start.sh` 通过 `detach.py` 用
 `start_new_session=True` 起新会话，重启从「卡 7 分钟」变成 8 秒返回。
+
+## 在本地 Mac 上跑（构建机不在网里时）
+
+同一套脚本，换环境变量即可——`start.sh` 除了 `JENKINS_HOME` 还认 `WAR`/`PORT`/`CENTER_DIR`/`CENTER_PORT`/`JDK`：
+
+```bash
+# war 与插件（TUNA 镜像 + 官方 index 本地解析依赖；约 3 分钟，54 个插件）
+#   ~/jenkins-local/jenkins.war, ~/jenkins-local/plugins/*.jpi
+JENKINS_HOME=$HOME/jenkins-local \
+WAR=$HOME/jenkins-local/jenkins.war \
+PORT=8098 \
+CENTER_DIR=$HOME/jenkins-local/center-http \
+CENTER_PORT=8099 \
+JDK=$HOME/tools/jdk-21.0.12.1+1/Contents/Home \
+  tools/jenkins-rehearsal/start.sh restart
+```
+
+本机需要的工具链（都已在机器上，只差 `PATH`，由 `init.groovy.d/04-env.groovy` 补）：
+
+| 工具 | 路径 |
+|---|---|
+| Maven | `~/tools/apache-maven-3.9.16/bin` |
+| Node | `~/.hermes/tools/node-26.7.0-darwin-x64/bin` |
+| JDK | `~/tools/jdk-21.0.12.1+1/Contents/Home` |
+| CMake/CTest | `/usr/local/bin` |
+| pytest | 系统 python3.9 的 `--user` 安装（8.4.2） |
+
+中心不走网络：`~/jenkins-local/center-http/main` 是指向 `~/Codes/jenkins-atom-center` 的软链接，`python3 -m http.server 8099`
+直接服务工作区——**发布新版本后立刻可见**，但 Jenkins 自己的索引缓存不会自动更新，症状是
+`atom hummerstudio/<code>:<new version> not listed in index.json`。删 `$JENKINS_HOME/atom-center-remote` 再重启即可。
+
+本地实测（2026-10-31）：
+
+```
+demo-notify              #3  SUCCESS   slack + dingtalk → 本地假端点，钉钉签名在 URL 上
+demo-java-maven-mixed    #1  SUCCESS   demo-node-tap-mixed      #1  SUCCESS
+demo-python-pytest-mixed #1  SUCCESS   demo-cpp-cmake-mixed     #1  SUCCESS
+demo-java-maven-atoms    #1  SUCCESS   demo-node-tap-atoms      #1  SUCCESS
+demo-python-pytest-atoms #1  SUCCESS   demo-cpp-cmake-atoms     #1  SUCCESS
+```
+
+假端点收到的报文（就是断言用的那一行）：
+
+```json
+{"path": "/services/T000/B000/XXXX", "body": "{\"text\":\"demo build 3 finished\"}"}
+{"path": "/robot/send?access_token=demo&timestamp=1793417238851&sign=OMC%2B...",
+ "body": "{\"msgtype\":\"text\",\"text\":{\"content\":\"钉钉：构建 3\"}}"}
+```
