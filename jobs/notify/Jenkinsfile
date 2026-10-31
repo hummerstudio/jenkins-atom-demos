@@ -5,12 +5,12 @@ pipeline {
   stages {
     stage('notify') {
       steps {
-        runAtom(atom: 'chat-notify', version: '1.0.0', inputs: [
+        runAtom(atom: 'chat-notify', version: '1.0.1', inputs: [
           provider: 'slack',
           webhookUrl: 'http://127.0.0.1:8123/services/T000/B000/XXXX',
           text: "demo build ${env.BUILD_NUMBER} finished",
         ])
-        runAtom(atom: 'chat-notify', version: '1.0.0', inputs: [
+        runAtom(atom: 'chat-notify', version: '1.0.1', inputs: [
           provider: 'dingtalk',
           webhookUrl: 'http://127.0.0.1:8123/robot/send?access_token=demo',
           secret: 'SECdemo',
