@@ -1,0 +1,30 @@
+// 制品仓库族的演练：推到本机的假仓库，断言 URL 形状、鉴权头与校验和。
+//   python3 jobs/publish/fake_repo.py 8124 /tmp/repo.log &
+pipeline {
+  agent any
+  stages {
+    stage('publish') {
+      steps {
+        writeFile file: 'build/libs/app-1.0.0.jar', text: 'jar-bytes'
+        writeFile file: 'site/index.html', text: 'html'
+        runAtom(atom: 'artifact-publish', version: '1.0.1', inputs: [
+          provider: 'artifactory',
+          baseUrl: 'http://127.0.0.1:8124',
+          repository: 'libs-release',
+          username: 'deployer',
+          password: 's3cret',
+          files: '**/*.jar, site/*.html',
+          pathTemplate: 'acme/app/1.0.0/{name}',
+        ])
+        runAtom(atom: 'artifact-publish', version: '1.0.1', inputs: [
+          provider: 'nexus',
+          baseUrl: 'http://127.0.0.1:8124',
+          repository: 'releases',
+          token: 'nxt',
+          files: 'site/*.html',
+          pathTemplate: 'site/{name}',
+        ])
+      }
+    }
+  }
+}
