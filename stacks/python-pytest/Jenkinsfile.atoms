@@ -10,7 +10,7 @@ pipeline {
     }
     stage('build and test') {
       steps { dir('stacks/python-pytest') {
-        runAtom(atom: 'script', version: '1.0.1', inputs: [
+        runAtom(atom: 'script', version: '1.1.1', inputs: [
           interpreter: 'bash',
           script: 'set -euo pipefail\nrm -rf reports\nmkdir -p reports\npython3 -m pytest -q\n'
         ])
