@@ -1,0 +1,5 @@
+0 INFO [Pipeline] Start of Pipeline
+1500 INFO [Pipeline] stage build
+9000 INFO compiling
+21500 INFO [Pipeline] stage package
+32000 INFO [Pipeline] End of Pipeline

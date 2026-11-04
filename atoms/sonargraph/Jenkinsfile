@@ -17,7 +17,7 @@ pipeline {
       steps {
         runAtom(atom: 'sonargraph', version: '1.0.0', inputs: [
             action: 'report',
-            reportPath: 'target/sonargraph/sonargraph.xml',
+            reportPath: 'target/sonargraph/sonargraph-report.xml',
             architectureViolationsAction: 'nothing'
           ])
       }

@@ -18,12 +18,7 @@ pipeline {
         runAtom(atom: 'mail-ext', version: '1.0.0', inputs: [
             from: 'jenkins@localhost',
             subject: '[Jenkins] $PROJECT_NAME #$BUILD_NUMBER - $BUILD_STATUS',
-            body: 'Build: $BUILD_URL
-Result: $BUILD_STATUS
-
-$BUILD_LOG_EXCERPT
-
-$FAILED_TESTS'
+            body: 'Build: $BUILD_URL\nResult: $BUILD_STATUS\n\n$BUILD_LOG_EXCERPT\n\n$FAILED_TESTS'
           ],
           continueOnError: true)
       }

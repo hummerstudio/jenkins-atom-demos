@@ -17,7 +17,7 @@ pipeline {
       steps {
         runAtom(atom: 'build-time-blame', version: '1.0.0', inputs: [
             timestampFormat: 'elapsedMillis',
-            logFile: 'build-with-timestamps.log'
+            logFile: 'build-time.log'
           ])
       }
     }

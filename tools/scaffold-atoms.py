@@ -42,22 +42,24 @@ NOT_INFORMATIVE = {"timeoutSeconds", "label", "outputDir", "failOnError", "dryRu
 
 # Per-atom test inputs and setup. Everything here is data: the Jenkinsfile that uses it is committed next to it.
 OVERRIDES: dict[str, dict] = {
-    "build-time-blame": {"inputs": {"logFile": "build-with-timestamps.log"}},
+    "build-time-blame": {"inputs": {"logFile": "build-time.log", "timestampFormat": "elapsedMillis"}},
     "cucumber": {"inputs": {"pattern": "**/cucumber.json"}},
     "dependency-check": {"inputs": {"pattern": "**/dependency-check-report.xml"}},
     "file-ops": {"inputs": {"operation": "copy", "pattern": "dist/*.jar", "target": "out/copied"}},
     "gatling-report": {"inputs": {"pattern": "**/simulation.log"}},
     "git-checkout": {"inputs": {"url": "file:///Users/tangming/Codes/jenkins-atom-demos", "branch": "main"}},
     "git": {"prelude": ["git checkout -B main"]},
+    "http-request": {"inputs": {"url": "http://127.0.0.1:8098/api/json", "expectStatus": "2xx"}},
     "git-push": {"prelude": ["git checkout -B main"]},
     "git-changelog": {"prelude": ["git checkout -B main"]},
     "html": {"inputs": {"path": "out/coverage"}},
-    "log-parser": {"inputs": {"source": "file:build.log"}},
+    "log-parser": {"inputs": {"source": "build.log", "rules": "{\"error\": \"ERROR|Exception\"}"}},
     "robot": {"inputs": {"pattern": "**/output.xml"}},
     "script": {"inputs": {"interpreter": "sh", "script": "echo hello from the script atom"}},
-    "sonargraph": {"inputs": {"reportPath": "target/sonargraph/sonargraph.xml"}},
-    "text-file": {"inputs": {"option": "create", "path": "notes.txt", "content": "hello"}},
-    "text-finder": {"inputs": {"regexp": "ERROR", "fileSet": "build.log"}},
+    "sonargraph": {"inputs": {"reportPath": "target/sonargraph/sonargraph-report.xml"}},
+    "text-file": {"inputs": {"option": "overwrite", "path": "notes.txt", "content": "hello"}},
+    "text-finder": {"inputs": {"regexp": "NEVER_MATCHES_ANYWHERE", "useBuildLog": "false",
+                               "fileSet": "build.log"}},
 }
 
 # Needs a service that is not on this machine at all: the failure is expected and is recorded, not fatal.
@@ -81,7 +83,9 @@ def atoms() -> dict[str, dict]:
 
 
 def groovy(value: object) -> str:
-    return "'" + str(value).replace("\\", "\\\\").replace("'", "\\'") + "'"
+    text = (str(value).replace("\\", "\\\\").replace("'", "\\'")
+            .replace("\r", "\\r").replace("\n", "\\n").replace("\t", "\\t"))
+    return "'" + text + "'"
 
 
 def inputs_of(task: dict) -> dict[str, str]:
