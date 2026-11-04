@@ -10,6 +10,10 @@ pipeline {
         sh 'cp -R atoms/_shared/fixtures/. .'
         sh 'if [ -d atoms/git-push/fixtures ]; then cp -R atoms/git-push/fixtures/. .; fi'
         sh 'git checkout -B main'
+        sh 'git init -q --bare "$WORKSPACE/../push-target.git"'
+        sh 'git remote set-url origin "$WORKSPACE/../push-target.git"'
+        sh 'git config user.email atom@example.com'
+        sh 'git config user.name atom'
       }
     }
 
