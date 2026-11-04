@@ -42,7 +42,12 @@ NOT_INFORMATIVE = {"timeoutSeconds", "label", "outputDir", "failOnError", "dryRu
 
 # Per-atom test inputs and setup. Everything here is data: the Jenkinsfile that uses it is committed next to it.
 OVERRIDES: dict[str, dict] = {
-    "build-time-blame": {"inputs": {"logFile": "build-time.log", "timestampFormat": "elapsedMillis"}},
+    "build-time-blame": {"inputs": {
+        "logFile": "build-time.log",
+        "timestampFormat": "elapsedMillis",
+        "steps": '[{"key": "compile", "label": "编译"}, {"key": "test", "label": "测试"},'
+                 ' {"key": "package", "label": "打包"}]',
+    }},
     "cucumber": {"inputs": {"pattern": "**/cucumber.json"}},
     "dependency-check": {"inputs": {"pattern": "**/dependency-check-report.xml"}},
     "file-ops": {"inputs": {"operation": "copy", "pattern": "dist/*.jar", "target": "out/copied"}},
@@ -53,7 +58,7 @@ OVERRIDES: dict[str, dict] = {
     "git-push": {"prelude": ["git checkout -B main"]},
     "git-changelog": {"prelude": ["git checkout -B main"]},
     "html": {"inputs": {"path": "out/coverage"}},
-    "log-parser": {"inputs": {"source": "build.log", "rules": "{\"error\": \"ERROR|Exception\"}"}},
+    "log-parser": {"inputs": {"source": "clean.log", "rules": "{\"note\": \"WARN\"}"}},
     "robot": {"inputs": {"pattern": "**/output.xml"}},
     "script": {"inputs": {"interpreter": "sh", "script": "echo hello from the script atom"}},
     "sonargraph": {"inputs": {"reportPath": "target/sonargraph/sonargraph-report.xml"}},

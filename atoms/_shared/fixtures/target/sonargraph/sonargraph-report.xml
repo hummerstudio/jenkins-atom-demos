@@ -1,1 +1,12 @@
-<report/>
+<?xml version="1.0" encoding="UTF-8"?>
+<report>
+  <metaData>
+    <project>demo</project>
+  </metaData>
+  <issueTypes>
+    <issueType id="cycle" name="Cycle" category="Architecture" severity="Error"/>
+  </issueTypes>
+  <analyzer>
+    <issues/>
+  </analyzer>
+</report>

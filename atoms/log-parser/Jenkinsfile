@@ -16,8 +16,8 @@ pipeline {
     stage('log-parser') {
       steps {
         runAtom(atom: 'log-parser', version: '1.0.0', inputs: [
-            source: 'build.log',
-            rules: '{"error": "ERROR|Exception"}'
+            source: 'clean.log',
+            rules: '{"note": "WARN"}'
           ])
       }
     }
