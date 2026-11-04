@@ -1,18 +1,10 @@
-// slack-upload @ 1.0.0 — 生成的测试流水线，fixtures 在 atoms/_shared/fixtures
+// slack-upload @ 1.0.0 — 原子测试流水线；它需要的输入文件都写在这里
 // 这个原子要外部服务/凭据：失败会被记录，流水线保持成功（continueOnError）。
 pipeline {
   agent any
   options { timeout(time: 5, unit: 'MINUTES') }
 
   stages {
-    stage('fixtures') {
-      steps {
-        sh 'cp -R atoms/_shared/fixtures/. .'
-        sh 'if [ -d atoms/slack-upload/fixtures ]; then cp -R atoms/slack-upload/fixtures/. .; fi'
-
-      }
-    }
-
     stage('slack-upload') {
       steps {
         runAtom(atom: 'slack-upload', version: '1.latest', inputs: [

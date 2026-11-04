@@ -1,15 +1,31 @@
-// sonargraph @ 1.0.0 — 生成的测试流水线，fixtures 在 atoms/_shared/fixtures
+// sonargraph @ 1.0.0 — 原子测试流水线；它需要的输入文件都写在这里
 // 原子失败即构建失败。
 pipeline {
   agent any
   options { timeout(time: 5, unit: 'MINUTES') }
 
   stages {
-    stage('fixtures') {
+    stage('准备') {
       steps {
-        sh 'cp -R atoms/_shared/fixtures/. .'
-        sh 'if [ -d atoms/sonargraph/fixtures ]; then cp -R atoms/sonargraph/fixtures/. .; fi'
-
+        writeFile file: 'target/sonargraph/sonargraph-report.xml', text: '''<?xml version="1.0" encoding="UTF-8"?>
+<report>
+  <metaData>
+    <project>demo</project>
+    <issueCategories>
+      <category id="arch" name="Architecture"/>
+    </issueCategories>
+    <issueTypes>
+      <issueType id="cycle" name="Cycle" severity="Error" category="arch"/>
+    </issueTypes>
+    <metricIds>
+      <metricId id="NCCD" name="NCCD"/>
+    </metricIds>
+  </metaData>
+  <analyzer>
+    <issues/>
+  </analyzer>
+</report>
+'''
       }
     }
 

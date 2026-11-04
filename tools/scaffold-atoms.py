@@ -19,6 +19,9 @@ import sys
 from pathlib import Path
 
 DEMOS = Path(__file__).resolve().parent.parent
+# Fixture *content* lives here only as the generator's source: every Jenkinsfile carries the files it needs inline,
+# so a pipeline read on its own is the whole story and nothing is copied around at build time.
+FIXTURES = DEMOS / "tools" / "fixtures"
 SOURCES = Path(os.environ.get("ATOM_SOURCES", Path.home() / "Codes"))
 SKIP = {"jenkins-atom-demo", "jenkins-atom-demos", "jenkins-atom-center", "jenkins-atom-site",
         "jenkins-atom-plugin", "jenkins-atom-sdk"}
@@ -99,6 +102,52 @@ def atoms() -> dict[str, dict]:
     return found
 
 
+# A few atoms read a project the fixture set has to provide first; the rest declare their file in task.json and are
+# picked up by needs() below. Both lists stay explicit so a missing fixture is a review comment, not a mystery.
+EXTRA_NEEDS: dict[str, list[str]] = {
+    "maven": ["pom.xml"],
+    "maven-resolve": ["pom.xml"],
+    "ant": ["build.xml"],
+    "gradle": ["settings.gradle", "build.gradle"],
+    "sbt": ["build.sbt", "project/build.properties"],
+    "junit": ["target/surefire-reports/TEST-demo.SampleTest.xml"],
+    "jmeter": ["results.jtl"],
+    "cmake-build": ["CMakeLists.txt", "hello.c"],
+    "tap": ["results/demo.tap"],
+    "xunit": ["TestResults/demo.trx"],
+    "allure": ["allure-results/demo-result.json"],
+    "file-ops": ["dist/demo.jar"],
+    "build-time-blame": ["build-time.log"],
+    "log-parser": ["clean.log"],
+    "text-finder": ["build.log"],
+    "plot": ["data.csv"],
+    "env-injector": [".env"],
+    "json-tool": ["package.json"],
+}
+
+
+def needs(code: str, task: dict) -> list[str]:
+    """The fixture files this atom reads: what its task.json names, plus the project files a build tool expects."""
+    defaults = " ".join(str(spec.get("default", "")) for spec in (task.get("input") or {}).values()
+                        if isinstance(spec, dict))
+    found = {path.relative_to(FIXTURES).as_posix()
+             for path in FIXTURES.rglob("*")
+             if path.is_file() and (path.name in defaults or path.relative_to(FIXTURES).as_posix() in defaults)}
+    found.update(EXTRA_NEEDS.get(code, []))
+    return sorted(found)
+
+
+def groovy_block(path: str, text: str) -> str:
+    """One writeFile with the file's text inline, escaped so Groovy keeps it byte for byte."""
+    body = text.replace("\\", "\\\\")
+    if "'''" in body:
+        body = body.replace('"""', '\\"\\"\\"')
+        quote = '"""'
+    else:
+        quote = "'''"
+    return f"        writeFile file: {groovy(path)}, text: {quote}{body}{quote}"
+
+
 def groovy(value: object) -> str:
     text = (str(value).replace("\\", "\\\\").replace("'", "\\'")
             .replace("\r", "\\r").replace("\n", "\\n").replace("\t", "\\t"))
@@ -143,23 +192,20 @@ def jenkinsfile(code: str, task: dict) -> str:
     call += ")"
     note = ("// 这个原子要外部服务/凭据：失败会被记录，流水线保持成功（continueOnError）。"
             if code in SERVICE else "// 原子失败即构建失败。")
-    prelude_steps = "".join(f"        sh '{line}'\n" for line in prelude).rstrip("\n")
-    return f"""// {code} @ {version} — 生成的测试流水线，fixtures 在 atoms/_shared/fixtures
+    setup: list[str] = [groovy_block(name, (FIXTURES / name).read_text(encoding="utf-8"))
+                        for name in needs(code, task)]
+    setup += [f"        sh {groovy(line)}" for line in prelude]
+    prepare = ""
+    if setup:
+        prepare = "    stage('准备') {\n      steps {\n" + "\n".join(setup) + "\n      }\n    }\n\n"
+    return f"""// {code} @ {version} — 原子测试流水线；它需要的输入文件都写在这里
 {note}
 pipeline {{
   agent any
   options {{ timeout(time: 5, unit: 'MINUTES') }}
 
   stages {{
-    stage('fixtures') {{
-      steps {{
-        sh 'cp -R atoms/_shared/fixtures/. .'
-        sh 'if [ -d atoms/{code}/fixtures ]; then cp -R atoms/{code}/fixtures/. .; fi'
-{prelude_steps}
-      }}
-    }}
-
-    stage('{code}') {{
+{prepare}    stage('{code}') {{
       steps {{
         {call}
       }}

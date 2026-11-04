@@ -1,18 +1,10 @@
-// logstash @ 1.0.0 — 生成的测试流水线，fixtures 在 atoms/_shared/fixtures
+// logstash @ 1.0.0 — 原子测试流水线；它需要的输入文件都写在这里
 // 原子失败即构建失败。
 pipeline {
   agent any
   options { timeout(time: 5, unit: 'MINUTES') }
 
   stages {
-    stage('fixtures') {
-      steps {
-        sh 'cp -R atoms/_shared/fixtures/. .'
-        sh 'if [ -d atoms/logstash/fixtures ]; then cp -R atoms/logstash/fixtures/. .; fi'
-
-      }
-    }
-
     stage('logstash') {
       steps {
         runAtom(atom: 'logstash', version: '1.latest', inputs: [

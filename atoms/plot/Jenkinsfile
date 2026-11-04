@@ -1,15 +1,17 @@
-// plot @ 1.0.0 — 生成的测试流水线，fixtures 在 atoms/_shared/fixtures
+// plot @ 1.0.0 — 原子测试流水线；它需要的输入文件都写在这里
 // 原子失败即构建失败。
 pipeline {
   agent any
   options { timeout(time: 5, unit: 'MINUTES') }
 
   stages {
-    stage('fixtures') {
+    stage('准备') {
       steps {
-        sh 'cp -R atoms/_shared/fixtures/. .'
-        sh 'if [ -d atoms/plot/fixtures ]; then cp -R atoms/plot/fixtures/. .; fi'
-
+        writeFile file: 'data.csv', text: '''day,value
+1,3
+2,5
+3,4
+'''
       }
     }
 

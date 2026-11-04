@@ -1,18 +1,10 @@
-// script @ 1.1.1 — 生成的测试流水线，fixtures 在 atoms/_shared/fixtures
+// script @ 1.1.1 — 原子测试流水线；它需要的输入文件都写在这里
 // 原子失败即构建失败。
 pipeline {
   agent any
   options { timeout(time: 5, unit: 'MINUTES') }
 
   stages {
-    stage('fixtures') {
-      steps {
-        sh 'cp -R atoms/_shared/fixtures/. .'
-        sh 'if [ -d atoms/script/fixtures ]; then cp -R atoms/script/fixtures/. .; fi'
-
-      }
-    }
-
     stage('script') {
       steps {
         runAtom(atom: 'script', version: '1.latest', inputs: [

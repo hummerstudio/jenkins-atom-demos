@@ -1,15 +1,19 @@
-// gatling-report @ 1.0.0 — 生成的测试流水线，fixtures 在 atoms/_shared/fixtures
+// gatling-report @ 1.0.0 — 原子测试流水线；它需要的输入文件都写在这里
 // 原子失败即构建失败。
 pipeline {
   agent any
   options { timeout(time: 5, unit: 'MINUTES') }
 
   stages {
-    stage('fixtures') {
+    stage('准备') {
       steps {
-        sh 'cp -R atoms/_shared/fixtures/. .'
-        sh 'if [ -d atoms/gatling-report/fixtures ]; then cp -R atoms/gatling-report/fixtures/. .; fi'
-
+        writeFile file: 'simulation.log', text: '''RUN	demo.Simulation	demo.Simulation	1762300000000	1762300012000
+USER	Demo Simulation		1762300000000
+REQUEST	Demo Simulation	request_1	1762300000100	1762300000250	OK	
+REQUEST	Demo Simulation	request_2	1762300000300	1762300000450	OK	
+REQUEST	Demo Simulation	request_3	1762300000500	1762300000620	OK	
+REQUEST	Demo Simulation	request_4	1762300000700	1762300000890	OK	
+'''
       }
     }
 

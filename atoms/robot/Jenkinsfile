@@ -1,15 +1,32 @@
-// robot @ 1.0.0 — 生成的测试流水线，fixtures 在 atoms/_shared/fixtures
+// robot @ 1.0.0 — 原子测试流水线；它需要的输入文件都写在这里
 // 原子失败即构建失败。
 pipeline {
   agent any
   options { timeout(time: 5, unit: 'MINUTES') }
 
   stages {
-    stage('fixtures') {
+    stage('准备') {
       steps {
-        sh 'cp -R atoms/_shared/fixtures/. .'
-        sh 'if [ -d atoms/robot/fixtures ]; then cp -R atoms/robot/fixtures/. .; fi'
-
+        writeFile file: 'output.xml', text: '''<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.0" generated="2026-11-04T10:00:00" rpa="false" schemaversion="4">
+  <suite id="s1" name="Demo">
+    <test id="s1-t1" name="Passes">
+      <status status="PASS" start="2026-11-04T10:00:00" elapsed="0.012"/>
+    </test>
+    <status status="PASS" start="2026-11-04T10:00:00" elapsed="0.013"/>
+  </suite>
+  <statistics>
+    <total>
+      <stat pass="1" fail="0" skip="0">All Tests</stat>
+    </total>
+    <tag/>
+    <suite>
+      <stat pass="1" fail="0" skip="0" id="s1" name="Demo">Demo</stat>
+    </suite>
+  </statistics>
+  <errors/>
+</robot>
+'''
       }
     }
 

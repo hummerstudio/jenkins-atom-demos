@@ -1,18 +1,10 @@
-// k8s-deploy @ 1.0.0 — 生成的测试流水线，fixtures 在 atoms/_shared/fixtures
+// k8s-deploy @ 1.0.0 — 原子测试流水线；它需要的输入文件都写在这里
 // 这个原子要外部服务/凭据：失败会被记录，流水线保持成功（continueOnError）。
 pipeline {
   agent any
   options { timeout(time: 5, unit: 'MINUTES') }
 
   stages {
-    stage('fixtures') {
-      steps {
-        sh 'cp -R atoms/_shared/fixtures/. .'
-        sh 'if [ -d atoms/k8s-deploy/fixtures ]; then cp -R atoms/k8s-deploy/fixtures/. .; fi'
-
-      }
-    }
-
     stage('k8s-deploy') {
       steps {
         runAtom(atom: 'k8s-deploy', version: '1.latest', inputs: [

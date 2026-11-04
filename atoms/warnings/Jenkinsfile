@@ -1,15 +1,16 @@
-// warnings @ 1.0.0 — 生成的测试流水线，fixtures 在 atoms/_shared/fixtures
+// warnings @ 1.0.0 — 原子测试流水线；它需要的输入文件都写在这里
 // 原子失败即构建失败。
 pipeline {
   agent any
   options { timeout(time: 5, unit: 'MINUTES') }
 
   stages {
-    stage('fixtures') {
+    stage('准备') {
       steps {
-        sh 'cp -R atoms/_shared/fixtures/. .'
-        sh 'if [ -d atoms/warnings/fixtures ]; then cp -R atoms/warnings/fixtures/. .; fi'
-
+        writeFile file: 'build.log', text: '''2026-11-04 10:00:00 INFO starting
+2026-11-04 10:00:01 WARN slow step
+2026-11-04 10:00:02 ERROR boom
+'''
       }
     }
 

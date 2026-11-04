@@ -1,18 +1,10 @@
-// artifact-size @ 1.1.0 — 生成的测试流水线，fixtures 在 atoms/_shared/fixtures
+// artifact-size @ 1.1.0 — 原子测试流水线；它需要的输入文件都写在这里
 // 原子失败即构建失败。
 pipeline {
   agent any
   options { timeout(time: 5, unit: 'MINUTES') }
 
   stages {
-    stage('fixtures') {
-      steps {
-        sh 'cp -R atoms/_shared/fixtures/. .'
-        sh 'if [ -d atoms/artifact-size/fixtures ]; then cp -R atoms/artifact-size/fixtures/. .; fi'
-
-      }
-    }
-
     stage('artifact-size') {
       steps {
         runAtom(atom: 'artifact-size', version: '1.latest', inputs: [

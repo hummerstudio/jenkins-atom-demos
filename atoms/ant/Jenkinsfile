@@ -1,15 +1,16 @@
-// ant @ 1.2.0 — 生成的测试流水线，fixtures 在 atoms/_shared/fixtures
+// ant @ 1.2.0 — 原子测试流水线；它需要的输入文件都写在这里
 // 原子失败即构建失败。
 pipeline {
   agent any
   options { timeout(time: 5, unit: 'MINUTES') }
 
   stages {
-    stage('fixtures') {
+    stage('准备') {
       steps {
-        sh 'cp -R atoms/_shared/fixtures/. .'
-        sh 'if [ -d atoms/ant/fixtures ]; then cp -R atoms/ant/fixtures/. .; fi'
-
+        writeFile file: 'build.xml', text: '''<project name="demo" default="build">
+  <target name="build"><echo>ant build ok</echo></target>
+</project>
+'''
       }
     }
 

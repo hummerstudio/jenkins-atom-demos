@@ -1,15 +1,16 @@
-// tap @ 1.1.0 — 生成的测试流水线，fixtures 在 atoms/_shared/fixtures
+// tap @ 1.1.0 — 原子测试流水线；它需要的输入文件都写在这里
 // 原子失败即构建失败。
 pipeline {
   agent any
   options { timeout(time: 5, unit: 'MINUTES') }
 
   stages {
-    stage('fixtures') {
+    stage('准备') {
       steps {
-        sh 'cp -R atoms/_shared/fixtures/. .'
-        sh 'if [ -d atoms/tap/fixtures ]; then cp -R atoms/tap/fixtures/. .; fi'
-
+        writeFile file: 'results/demo.tap', text: '''1..2
+ok 1 - first
+ok 2 - second
+'''
       }
     }
 

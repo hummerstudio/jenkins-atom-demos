@@ -1,15 +1,17 @@
-// jmeter @ 1.2.0 — 生成的测试流水线，fixtures 在 atoms/_shared/fixtures
+// jmeter @ 1.2.0 — 原子测试流水线；它需要的输入文件都写在这里
 // 原子失败即构建失败。
 pipeline {
   agent any
   options { timeout(time: 5, unit: 'MINUTES') }
 
   stages {
-    stage('fixtures') {
+    stage('准备') {
       steps {
-        sh 'cp -R atoms/_shared/fixtures/. .'
-        sh 'if [ -d atoms/jmeter/fixtures ]; then cp -R atoms/jmeter/fixtures/. .; fi'
-
+        writeFile file: 'results.jtl', text: '''<?xml version="1.0" encoding="UTF-8"?>
+<testResults version="1.2">
+  <httpSample t="12" lt="12" ts="1762300000000" s="true" lb="GET /" rc="200" rm="OK" tn="Thread Group 1-1" by="120"/>
+</testResults>
+'''
       }
     }
 

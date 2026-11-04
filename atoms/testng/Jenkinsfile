@@ -1,15 +1,24 @@
-// testng @ 1.0.1 — 生成的测试流水线，fixtures 在 atoms/_shared/fixtures
+// testng @ 1.0.1 — 原子测试流水线；它需要的输入文件都写在这里
 // 原子失败即构建失败。
 pipeline {
   agent any
   options { timeout(time: 5, unit: 'MINUTES') }
 
   stages {
-    stage('fixtures') {
+    stage('准备') {
       steps {
-        sh 'cp -R atoms/_shared/fixtures/. .'
-        sh 'if [ -d atoms/testng/fixtures ]; then cp -R atoms/testng/fixtures/. .; fi'
-
+        writeFile file: 'testng-results.xml', text: '''<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="0" total="2" passed="2">
+  <suite name="demo" duration-ms="120" started-at="2026-11-04T10:00:00Z" finished-at="2026-11-04T10:00:01Z">
+    <test name="demo-test" duration-ms="100" started-at="2026-11-04T10:00:00Z" finished-at="2026-11-04T10:00:01Z">
+      <class name="demo.SampleTest">
+        <test-method name="passes" status="PASS" duration-ms="12" started-at="2026-11-04T10:00:00Z" finished-at="2026-11-04T10:00:00Z"/>
+        <test-method name="alsoPasses" status="PASS" duration-ms="9" started-at="2026-11-04T10:00:00Z" finished-at="2026-11-04T10:00:00Z"/>
+      </class>
+    </test>
+  </suite>
+</testng-results>
+'''
       }
     }
 
