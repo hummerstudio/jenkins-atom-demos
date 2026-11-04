@@ -15,7 +15,7 @@ pipeline {
 
     stage('selenium-html-report') {
       steps {
-        runAtom(atom: 'selenium-html-report', version: '1.0.0', inputs: [
+        runAtom(atom: 'selenium-html-report', version: '1.latest', inputs: [
             testResultsDir: 'target'
           ])
       }

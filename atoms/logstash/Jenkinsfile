@@ -15,7 +15,7 @@ pipeline {
 
     stage('logstash') {
       steps {
-        runAtom(atom: 'logstash', version: '1.0.0', inputs: [
+        runAtom(atom: 'logstash', version: '1.latest', inputs: [
             indexer: 'syslog',
             host: '127.0.0.1',
             syslogFormat: 'rfc3164'

@@ -15,7 +15,7 @@ pipeline {
 
     stage('text-finder') {
       steps {
-        runAtom(atom: 'text-finder', version: '1.1.0', inputs: [
+        runAtom(atom: 'text-finder', version: '1.latest', inputs: [
             buildResult: 'FAILURE',
             regexp: 'NEVER_MATCHES_ANYWHERE',
             useBuildLog: 'false',

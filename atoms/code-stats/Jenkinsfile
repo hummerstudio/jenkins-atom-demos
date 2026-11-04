@@ -15,7 +15,7 @@ pipeline {
 
     stage('code-stats') {
       steps {
-        runAtom(atom: 'code-stats', version: '1.0.0', inputs: [
+        runAtom(atom: 'code-stats', version: '1.latest', inputs: [
             includes: '**/*.java, **/*.py, **/*.js, **/*.ts, **/*.go, **/*.rs, **/*.c, **/*.cpp, **/*.h, **/*.kt, **/*.sh, **/*.yml, **/*.xml, **/*.md',
             excludes: '**/target/**, **/build/**, **/node_modules/**, **/.git/**, **/dist/**, **/out/**'
           ])

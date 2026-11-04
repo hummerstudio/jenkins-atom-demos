@@ -15,7 +15,7 @@ pipeline {
 
     stage('telegram-notify') {
       steps {
-        runAtom(atom: 'telegram-notify', version: '1.0.0', inputs: [
+        runAtom(atom: 'telegram-notify', version: '1.latest', inputs: [
             apiBase: 'https://api.telegram.org'
           ],
           continueOnError: true)

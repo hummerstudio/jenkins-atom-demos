@@ -15,7 +15,7 @@ pipeline {
 
     stage('build-time-blame') {
       steps {
-        runAtom(atom: 'build-time-blame', version: '1.0.0', inputs: [
+        runAtom(atom: 'build-time-blame', version: '1.latest', inputs: [
             timestampFormat: 'elapsedMillis',
             logFile: 'build-time.log',
             steps: '[{"key": "compile", "label": "编译"}, {"key": "test", "label": "测试"}, {"key": "package", "label": "打包"}]'

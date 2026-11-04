@@ -15,7 +15,7 @@ pipeline {
 
     stage('vault-read') {
       steps {
-        runAtom(atom: 'vault-read', version: '1.1.0', inputs: [
+        runAtom(atom: 'vault-read', version: '1.latest', inputs: [
             action: 'read',
             mount: 'secret'
           ],

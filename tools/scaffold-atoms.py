@@ -130,7 +130,12 @@ def jenkinsfile(code: str, task: dict) -> str:
     params = inputs_of(task)
     params.update(OVERRIDES.get(code, {}).get("inputs", {}))
     prelude = OVERRIDES.get(code, {}).get("prelude", [])
-    call = f"runAtom(atom: {groovy(code)}, version: {groovy(task.get('version') or '')}"
+    # 1.latest, not 1.2.0: the demo should run the newest fix of the major the atom is on, so a republished atom is
+    # picked up without editing 100 Jenkinsfiles. The resolver treats it exactly like 1.*.
+    version = task.get("version") or ""
+    major = version.split(".")[0] if version else ""
+    pinned = f"{major}.latest" if major.isdigit() else version
+    call = f"runAtom(atom: {groovy(code)}, version: {groovy(pinned)}"
     if params:
         call += ", inputs: [\n            " + ",\n            ".join(f"{k}: {groovy(v)}" for k, v in params.items()) + "\n          ]"
     if code in SERVICE:
@@ -139,7 +144,7 @@ def jenkinsfile(code: str, task: dict) -> str:
     note = ("// 这个原子要外部服务/凭据：失败会被记录，流水线保持成功（continueOnError）。"
             if code in SERVICE else "// 原子失败即构建失败。")
     prelude_steps = "".join(f"        sh '{line}'\n" for line in prelude).rstrip("\n")
-    return f"""// {code} @ {task.get('version')} — 生成的测试流水线，fixtures 在 atoms/_shared/fixtures
+    return f"""// {code} @ {version} — 生成的测试流水线，fixtures 在 atoms/_shared/fixtures
 {note}
 pipeline {{
   agent any

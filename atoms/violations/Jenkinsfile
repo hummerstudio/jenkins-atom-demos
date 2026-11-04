@@ -15,7 +15,7 @@ pipeline {
 
     stage('violations') {
       steps {
-        runAtom(atom: 'violations', version: '1.0.0', inputs: [
+        runAtom(atom: 'violations', version: '1.latest', inputs: [
             reports: '**/checkstyle-result.xml, **/pmd.xml, **/cpd.xml, **/findbugsXml.xml',
             maxTotal: '-1',
             unstableTotal: '-1'

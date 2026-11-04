@@ -15,7 +15,7 @@ pipeline {
 
     stage('cucumber') {
       steps {
-        runAtom(atom: 'cucumber', version: '1.0.0', inputs: [
+        runAtom(atom: 'cucumber', version: '1.latest', inputs: [
             pattern: '**/cucumber.json'
           ])
       }

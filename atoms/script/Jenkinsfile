@@ -15,7 +15,7 @@ pipeline {
 
     stage('script') {
       steps {
-        runAtom(atom: 'script', version: '1.1.1', inputs: [
+        runAtom(atom: 'script', version: '1.latest', inputs: [
             interpreter: 'sh',
             script: 'echo hello from the script atom'
           ])

@@ -15,7 +15,7 @@ pipeline {
 
     stage('junit') {
       steps {
-        runAtom(atom: 'junit', version: '1.3.2', inputs: [
+        runAtom(atom: 'junit', version: '1.latest', inputs: [
             testResults: '**/surefire-reports/*.xml'
           ])
       }

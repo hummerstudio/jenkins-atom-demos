@@ -15,7 +15,7 @@ pipeline {
 
     stage('jira-build-info') {
       steps {
-        runAtom(atom: 'jira-build-info', version: '1.0.0', inputs: [
+        runAtom(atom: 'jira-build-info', version: '1.latest', inputs: [
             action: 'build',
             projectName: '${JOB_NAME}',
             buildNumber: '${BUILD_NUMBER}'

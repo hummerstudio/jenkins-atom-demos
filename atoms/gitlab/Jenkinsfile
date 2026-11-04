@@ -15,7 +15,7 @@ pipeline {
 
     stage('gitlab') {
       steps {
-        runAtom(atom: 'gitlab', version: '1.0.0', inputs: [
+        runAtom(atom: 'gitlab', version: '1.latest', inputs: [
             action: 'comment'
           ],
           continueOnError: true)

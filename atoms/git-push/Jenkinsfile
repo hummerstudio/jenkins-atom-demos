@@ -19,7 +19,7 @@ pipeline {
 
     stage('git-push') {
       steps {
-        runAtom(atom: 'git-push', version: '1.0.0', inputs: [
+        runAtom(atom: 'git-push', version: '1.latest', inputs: [
             remote: 'origin'
           ])
       }

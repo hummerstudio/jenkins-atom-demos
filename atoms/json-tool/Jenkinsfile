@@ -15,7 +15,7 @@ pipeline {
 
     stage('json-tool') {
       steps {
-        runAtom(atom: 'json-tool', version: '1.0.1', inputs: [
+        runAtom(atom: 'json-tool', version: '1.latest', inputs: [
             operation: 'read',
             file: 'package.json'
           ])

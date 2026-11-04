@@ -15,7 +15,7 @@ pipeline {
 
     stage('files-tool') {
       steps {
-        runAtom(atom: 'files-tool', version: '1.2.0', inputs: [
+        runAtom(atom: 'files-tool', version: '1.latest', inputs: [
             operation: 'sha256',
             pattern: '**/*.jar',
             output: 'checksums.sha256'

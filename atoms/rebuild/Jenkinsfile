@@ -15,7 +15,7 @@ pipeline {
 
     stage('rebuild') {
       steps {
-        runAtom(atom: 'rebuild', version: '1.0.0')
+        runAtom(atom: 'rebuild', version: '1.latest')
       }
     }
   }

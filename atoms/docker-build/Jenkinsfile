@@ -15,7 +15,7 @@ pipeline {
 
     stage('docker-build') {
       steps {
-        runAtom(atom: 'docker-build', version: '1.0.2', inputs: [
+        runAtom(atom: 'docker-build', version: '1.latest', inputs: [
             dockerfile: 'Dockerfile',
             context: '.',
             tags: 'latest'

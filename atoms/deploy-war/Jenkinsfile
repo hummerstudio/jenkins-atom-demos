@@ -15,7 +15,7 @@ pipeline {
 
     stage('deploy-war') {
       steps {
-        runAtom(atom: 'deploy-war', version: '1.0.0', inputs: [
+        runAtom(atom: 'deploy-war', version: '1.latest', inputs: [
             war: '**/*.war'
           ],
           continueOnError: true)

@@ -15,7 +15,7 @@ pipeline {
 
     stage('plot') {
       steps {
-        runAtom(atom: 'plot', version: '1.0.0', inputs: [
+        runAtom(atom: 'plot', version: '1.latest', inputs: [
             pattern: '**/*.csv',
             title: 'Plot',
             outputFile: 'out/plot/plot.svg'

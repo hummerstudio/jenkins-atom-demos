@@ -15,7 +15,7 @@ pipeline {
 
     stage('build-name-setter') {
       steps {
-        runAtom(atom: 'build-name-setter', version: '1.2.0', inputs: [
+        runAtom(atom: 'build-name-setter', version: '1.latest', inputs: [
             displayName: '#${BUILD_NUMBER}'
           ])
       }

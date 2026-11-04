@@ -15,7 +15,7 @@ pipeline {
 
     stage('browserstack') {
       steps {
-        runAtom(atom: 'browserstack', version: '1.0.0', inputs: [
+        runAtom(atom: 'browserstack', version: '1.latest', inputs: [
             action: 'env',
             product: 'automate',
             buildName: '${BUILD_TAG}'

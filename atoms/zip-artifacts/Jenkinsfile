@@ -15,7 +15,7 @@ pipeline {
 
     stage('zip-artifacts') {
       steps {
-        runAtom(atom: 'zip-artifacts', version: '1.0.0', inputs: [
+        runAtom(atom: 'zip-artifacts', version: '1.latest', inputs: [
             operation: 'zip',
             archive: 'artifacts.zip',
             includes: '**/*'

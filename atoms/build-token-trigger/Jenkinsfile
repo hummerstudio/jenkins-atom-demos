@@ -15,7 +15,7 @@ pipeline {
 
     stage('build-token-trigger') {
       steps {
-        runAtom(atom: 'build-token-trigger', version: '1.0.0',
+        runAtom(atom: 'build-token-trigger', version: '1.latest',
           continueOnError: true)
       }
     }

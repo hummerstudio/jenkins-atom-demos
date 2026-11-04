@@ -15,7 +15,7 @@ pipeline {
 
     stage('splunk-hec') {
       steps {
-        runAtom(atom: 'splunk-hec', version: '1.0.0', inputs: [
+        runAtom(atom: 'splunk-hec', version: '1.latest', inputs: [
             sourcetype: 'jenkins',
             source: 'jenkins',
             mode: 'event'

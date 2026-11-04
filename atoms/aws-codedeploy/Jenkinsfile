@@ -15,7 +15,7 @@ pipeline {
 
     stage('aws-codedeploy') {
       steps {
-        runAtom(atom: 'aws-codedeploy', version: '1.0.0', inputs: [
+        runAtom(atom: 'aws-codedeploy', version: '1.latest', inputs: [
             deploymentConfig: 'CodeDeployDefault.OneAtATime',
             bundleType: 'zip',
             description: 'deployed by a Jenkins atom'

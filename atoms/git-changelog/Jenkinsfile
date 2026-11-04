@@ -15,7 +15,7 @@ pipeline {
 
     stage('git-changelog') {
       steps {
-        runAtom(atom: 'git-changelog', version: '1.0.0', inputs: [
+        runAtom(atom: 'git-changelog', version: '1.latest', inputs: [
             until: 'HEAD',
             output: 'CHANGELOG.md'
           ])

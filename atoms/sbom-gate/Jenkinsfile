@@ -15,7 +15,7 @@ pipeline {
 
     stage('sbom-gate') {
       steps {
-        runAtom(atom: 'sbom-gate', version: '1.0.0', inputs: [
+        runAtom(atom: 'sbom-gate', version: '1.latest', inputs: [
             projectVersion: 'latest',
             bomFile: '**/bom.json',
             maxCritical: '-1'

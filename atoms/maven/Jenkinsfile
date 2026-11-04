@@ -1,4 +1,4 @@
-// maven @ 1.2.0 — 生成的测试流水线，fixtures 在 atoms/_shared/fixtures
+// maven @ 1.2.1 — 生成的测试流水线，fixtures 在 atoms/_shared/fixtures
 // 原子失败即构建失败。
 pipeline {
   agent any
@@ -15,7 +15,7 @@ pipeline {
 
     stage('maven') {
       steps {
-        runAtom(atom: 'maven', version: '1.2.0', inputs: [
+        runAtom(atom: 'maven', version: '1.latest', inputs: [
             goals: 'verify'
           ])
       }

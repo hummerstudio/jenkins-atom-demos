@@ -15,7 +15,7 @@ pipeline {
 
     stage('k8s-deploy') {
       steps {
-        runAtom(atom: 'k8s-deploy', version: '1.0.0', inputs: [
+        runAtom(atom: 'k8s-deploy', version: '1.latest', inputs: [
             action: 'setImage',
             kubectlBinary: 'kubectl'
           ],

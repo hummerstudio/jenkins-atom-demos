@@ -15,7 +15,7 @@ pipeline {
 
     stage('gitee') {
       steps {
-        runAtom(atom: 'gitee', version: '1.0.0', inputs: [
+        runAtom(atom: 'gitee', version: '1.latest', inputs: [
             action: 'get',
             apiUrl: 'https://gitee.com/api/v5',
             base: 'master'

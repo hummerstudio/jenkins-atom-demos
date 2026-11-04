@@ -15,7 +15,7 @@ pipeline {
 
     stage('pyenv') {
       steps {
-        runAtom(atom: 'pyenv', version: '1.0.1',
+        runAtom(atom: 'pyenv', version: '1.latest',
           continueOnError: true)
       }
     }

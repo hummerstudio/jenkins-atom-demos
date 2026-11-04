@@ -15,7 +15,7 @@ pipeline {
 
     stage('artifact-deployer') {
       steps {
-        runAtom(atom: 'artifact-deployer', version: '1.0.0', inputs: [
+        runAtom(atom: 'artifact-deployer', version: '1.latest', inputs: [
             includes: '**'
           ],
           continueOnError: true)

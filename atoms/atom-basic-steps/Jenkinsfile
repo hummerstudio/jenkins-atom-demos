@@ -15,7 +15,7 @@ pipeline {
 
     stage('atom-basic-steps') {
       steps {
-        runAtom(atom: 'atom-basic-steps', version: '1.0.0', inputs: [
+        runAtom(atom: 'atom-basic-steps', version: '1.latest', inputs: [
             action: 'rename',
             displayName: '#${BUILD_NUMBER}',
             jenkinsUrl: '${JENKINS_URL}',

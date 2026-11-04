@@ -15,7 +15,7 @@ pipeline {
 
     stage('task-scanner') {
       steps {
-        runAtom(atom: 'task-scanner', version: '1.0.0', inputs: [
+        runAtom(atom: 'task-scanner', version: '1.latest', inputs: [
             includes: '**/*.java, **/*.kt, **/*.js, **/*.ts, **/*.py, **/*.go, **/*.rs, **/*.c, **/*.cpp, **/*.h, **/*.sh, **/*.rb, **/*.php, **/*.cs',
             excludes: '**/target/**, **/build/**, **/node_modules/**, **/.git/**, **/dist/**, **/out/**',
             markers: 'TODO, FIXME, XXX, HACK'

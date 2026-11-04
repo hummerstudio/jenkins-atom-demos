@@ -15,7 +15,7 @@ pipeline {
 
     stage('s3-upload') {
       steps {
-        runAtom(atom: 's3-upload', version: '1.0.0', inputs: [
+        runAtom(atom: 's3-upload', version: '1.latest', inputs: [
             source: 'dist'
           ],
           continueOnError: true)

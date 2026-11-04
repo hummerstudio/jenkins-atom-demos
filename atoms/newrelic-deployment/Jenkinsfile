@@ -15,7 +15,7 @@ pipeline {
 
     stage('newrelic-deployment') {
       steps {
-        runAtom(atom: 'newrelic-deployment', version: '1.0.0', inputs: [
+        runAtom(atom: 'newrelic-deployment', version: '1.latest', inputs: [
             region: 'us',
             mode: 'graphql',
             entityGuid: 'MXxBUE18QVBQTElDQVRJT058MTIzNDU2Nzg5'

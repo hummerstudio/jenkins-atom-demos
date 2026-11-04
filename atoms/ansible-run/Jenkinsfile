@@ -15,7 +15,7 @@ pipeline {
 
     stage('ansible-run') {
       steps {
-        runAtom(atom: 'ansible-run', version: '1.0.0', inputs: [
+        runAtom(atom: 'ansible-run', version: '1.latest', inputs: [
             playbook: 'site.yml'
           ],
           continueOnError: true)

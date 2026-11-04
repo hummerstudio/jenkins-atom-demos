@@ -15,7 +15,7 @@ pipeline {
 
     stage('compress-artifacts') {
       steps {
-        runAtom(atom: 'compress-artifacts', version: '1.0.1', inputs: [
+        runAtom(atom: 'compress-artifacts', version: '1.latest', inputs: [
             patterns: '**/*',
             outputFile: 'artifacts.zip'
           ])

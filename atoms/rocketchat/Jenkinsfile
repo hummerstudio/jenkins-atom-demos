@@ -15,7 +15,7 @@ pipeline {
 
     stage('rocketchat') {
       steps {
-        runAtom(atom: 'rocketchat', version: '1.0.0', inputs: [
+        runAtom(atom: 'rocketchat', version: '1.latest', inputs: [
             action: 'notify',
             mode: 'webhook',
             serverUrl: 'https://chat.example.com'

@@ -15,7 +15,7 @@ pipeline {
 
     stage('sbt') {
       steps {
-        runAtom(atom: 'sbt', version: '1.0.0', inputs: [
+        runAtom(atom: 'sbt', version: '1.latest', inputs: [
             actions: 'compile',
             sbtOptions: '-Dsbt.log.noformat=true'
           ])

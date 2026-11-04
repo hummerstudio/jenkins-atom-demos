@@ -15,7 +15,7 @@ pipeline {
 
     stage('bind-credentials') {
       steps {
-        runAtom(atom: 'bind-credentials', version: '1.0.0',
+        runAtom(atom: 'bind-credentials', version: '1.latest',
           continueOnError: true)
       }
     }

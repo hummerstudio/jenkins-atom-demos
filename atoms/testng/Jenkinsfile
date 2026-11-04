@@ -15,7 +15,7 @@ pipeline {
 
     stage('testng') {
       steps {
-        runAtom(atom: 'testng', version: '1.0.1', inputs: [
+        runAtom(atom: 'testng', version: '1.latest', inputs: [
             reportFilenamePattern: '**/testng-results.xml'
           ])
       }

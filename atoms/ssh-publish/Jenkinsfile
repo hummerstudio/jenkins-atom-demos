@@ -15,7 +15,7 @@ pipeline {
 
     stage('ssh-publish') {
       steps {
-        runAtom(atom: 'ssh-publish', version: '1.0.0', inputs: [
+        runAtom(atom: 'ssh-publish', version: '1.latest', inputs: [
             sourceFiles: '**/*',
             strictHostKeyChecking: 'accept-new'
           ],

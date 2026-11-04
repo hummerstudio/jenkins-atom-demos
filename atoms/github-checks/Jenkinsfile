@@ -15,7 +15,7 @@ pipeline {
 
     stage('github-checks') {
       steps {
-        runAtom(atom: 'github-checks', version: '1.0.0', inputs: [
+        runAtom(atom: 'github-checks', version: '1.latest', inputs: [
             status: 'completed',
             apiUrl: 'https://api.github.com'
           ],

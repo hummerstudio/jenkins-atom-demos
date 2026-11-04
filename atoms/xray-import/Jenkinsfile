@@ -15,7 +15,7 @@ pipeline {
 
     stage('xray-import') {
       steps {
-        runAtom(atom: 'xray-import', version: '1.0.0', inputs: [
+        runAtom(atom: 'xray-import', version: '1.latest', inputs: [
             xrayType: 'server',
             format: 'junit'
           ],

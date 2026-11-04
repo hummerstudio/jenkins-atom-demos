@@ -15,7 +15,7 @@ pipeline {
 
     stage('notify-webhook') {
       steps {
-        runAtom(atom: 'notify-webhook', version: '1.0.0', inputs: [
+        runAtom(atom: 'notify-webhook', version: '1.latest', inputs: [
             kind: 'slack',
             text: '${JOB_NAME} #${BUILD_NUMBER} ${BUILD_STATUS} — ${BUILD_URL}'
           ],

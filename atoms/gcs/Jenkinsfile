@@ -15,7 +15,7 @@ pipeline {
 
     stage('gcs') {
       steps {
-        runAtom(atom: 'gcs', version: '1.0.0', inputs: [
+        runAtom(atom: 'gcs', version: '1.latest', inputs: [
             action: 'upload',
             tokenUrl: 'https://oauth2.googleapis.com/token',
             apiUrl: 'https://storage.googleapis.com'

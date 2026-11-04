@@ -15,7 +15,7 @@ pipeline {
 
     stage('artifact-promote') {
       steps {
-        runAtom(atom: 'artifact-promote', version: '1.0.0',
+        runAtom(atom: 'artifact-promote', version: '1.latest',
           continueOnError: true)
       }
     }

@@ -15,7 +15,7 @@ pipeline {
 
     stage('disk-usage') {
       steps {
-        runAtom(atom: 'disk-usage', version: '1.0.0', inputs: [
+        runAtom(atom: 'disk-usage', version: '1.latest', inputs: [
             outDir: 'out/disk'
           ])
       }

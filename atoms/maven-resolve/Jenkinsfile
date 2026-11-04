@@ -15,7 +15,7 @@ pipeline {
 
     stage('maven-resolve') {
       steps {
-        runAtom(atom: 'maven-resolve', version: '1.0.0', inputs: [
+        runAtom(atom: 'maven-resolve', version: '1.latest', inputs: [
             localRepository: '.m2/repository',
             checksumPolicy: 'fail'
           ],

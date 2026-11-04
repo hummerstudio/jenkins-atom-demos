@@ -15,7 +15,7 @@ pipeline {
 
     stage('bitbucket-cloud-status') {
       steps {
-        runAtom(atom: 'bitbucket-cloud-status', version: '1.0.0',
+        runAtom(atom: 'bitbucket-cloud-status', version: '1.latest',
           continueOnError: true)
       }
     }

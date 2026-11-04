@@ -15,7 +15,7 @@ pipeline {
 
     stage('build-result') {
       steps {
-        runAtom(atom: 'build-result', version: '1.0.0', inputs: [
+        runAtom(atom: 'build-result', version: '1.latest', inputs: [
             result: 'SUCCESS'
           ])
       }

@@ -15,7 +15,7 @@ pipeline {
 
     stage('python-build') {
       steps {
-        runAtom(atom: 'python-build', version: '1.0.0', inputs: [
+        runAtom(atom: 'python-build', version: '1.latest', inputs: [
             distDir: 'dist'
           ],
           continueOnError: true)

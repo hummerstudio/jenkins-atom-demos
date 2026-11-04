@@ -15,7 +15,7 @@ pipeline {
 
     stage('checkstyle') {
       steps {
-        runAtom(atom: 'checkstyle', version: '1.2.0', inputs: [
+        runAtom(atom: 'checkstyle', version: '1.latest', inputs: [
             pattern: '**/checkstyle-result.xml, **/pmd.xml, **/spotbugsXml.xml, **/cppcheck*.xml'
           ])
       }

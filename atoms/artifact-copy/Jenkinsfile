@@ -15,7 +15,7 @@ pipeline {
 
     stage('artifact-copy') {
       steps {
-        runAtom(atom: 'artifact-copy', version: '1.0.0', inputs: [
+        runAtom(atom: 'artifact-copy', version: '1.latest', inputs: [
             buildSelector: 'lastSuccessfulBuild',
             artifacts: '**/*',
             targetDir: 'copied'

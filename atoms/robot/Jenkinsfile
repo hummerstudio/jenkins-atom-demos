@@ -15,7 +15,7 @@ pipeline {
 
     stage('robot') {
       steps {
-        runAtom(atom: 'robot', version: '1.0.0', inputs: [
+        runAtom(atom: 'robot', version: '1.latest', inputs: [
             pattern: '**/output.xml'
           ])
       }

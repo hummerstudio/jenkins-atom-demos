@@ -15,7 +15,7 @@ pipeline {
 
     stage('qtest') {
       steps {
-        runAtom(atom: 'qtest', version: '1.0.0', inputs: [
+        runAtom(atom: 'qtest', version: '1.latest', inputs: [
             action: 'run',
             qtestUrl: 'https://qtest.example.com',
             buildNumber: '$BUILD_NUMBER'

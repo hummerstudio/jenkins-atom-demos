@@ -15,7 +15,7 @@ pipeline {
 
     stage('log-parser') {
       steps {
-        runAtom(atom: 'log-parser', version: '1.0.0', inputs: [
+        runAtom(atom: 'log-parser', version: '1.latest', inputs: [
             source: 'clean.log',
             rules: '{"note": "WARN"}'
           ])

@@ -15,7 +15,7 @@ pipeline {
 
     stage('summary-report') {
       steps {
-        runAtom(atom: 'summary-report', version: '1.0.0', inputs: [
+        runAtom(atom: 'summary-report', version: '1.latest', inputs: [
             action: 'render',
             name: '**/*.xml',
             format: 'markdown'

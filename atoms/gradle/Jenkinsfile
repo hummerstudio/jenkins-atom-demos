@@ -15,7 +15,7 @@ pipeline {
 
     stage('gradle') {
       steps {
-        runAtom(atom: 'gradle', version: '1.2.0', inputs: [
+        runAtom(atom: 'gradle', version: '1.latest', inputs: [
             goals: 'build'
           ])
       }

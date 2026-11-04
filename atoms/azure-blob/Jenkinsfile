@@ -15,7 +15,7 @@ pipeline {
 
     stage('azure-blob') {
       steps {
-        runAtom(atom: 'azure-blob', version: '1.0.0', inputs: [
+        runAtom(atom: 'azure-blob', version: '1.latest', inputs: [
             files: '**/*.jar'
           ],
           continueOnError: true)

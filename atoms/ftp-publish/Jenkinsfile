@@ -15,7 +15,7 @@ pipeline {
 
     stage('ftp-publish') {
       steps {
-        runAtom(atom: 'ftp-publish', version: '1.0.0', inputs: [
+        runAtom(atom: 'ftp-publish', version: '1.latest', inputs: [
             sourceFiles: '**/*'
           ],
           continueOnError: true)

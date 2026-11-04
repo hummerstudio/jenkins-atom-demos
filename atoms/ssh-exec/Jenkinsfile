@@ -15,7 +15,7 @@ pipeline {
 
     stage('ssh-exec') {
       steps {
-        runAtom(atom: 'ssh-exec', version: '1.0.0', inputs: [
+        runAtom(atom: 'ssh-exec', version: '1.latest', inputs: [
             strictHostKeyChecking: 'accept-new'
           ],
           continueOnError: true)

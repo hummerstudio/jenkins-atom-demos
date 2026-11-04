@@ -15,7 +15,7 @@ pipeline {
 
     stage('sonar') {
       steps {
-        runAtom(atom: 'sonar', version: '1.0.1', inputs: [
+        runAtom(atom: 'sonar', version: '1.latest', inputs: [
             hostUrl: 'https://sonarcloud.io',
             scanner: 'sonarner',
             sources: '.'

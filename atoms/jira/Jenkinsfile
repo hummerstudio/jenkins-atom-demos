@@ -15,7 +15,7 @@ pipeline {
 
     stage('jira') {
       steps {
-        runAtom(atom: 'jira', version: '1.0.0', inputs: [
+        runAtom(atom: 'jira', version: '1.latest', inputs: [
             action: 'issue',
             issueType: 'Task',
             projectName: '${JOB_NAME}'

@@ -15,7 +15,7 @@ pipeline {
 
     stage('aws-cloudformation') {
       steps {
-        runAtom(atom: 'aws-cloudformation', version: '1.0.0',
+        runAtom(atom: 'aws-cloudformation', version: '1.latest',
           continueOnError: true)
       }
     }

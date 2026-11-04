@@ -15,7 +15,7 @@ pipeline {
 
     stage('datadog-metrics') {
       steps {
-        runAtom(atom: 'datadog-metrics', version: '1.0.0', inputs: [
+        runAtom(atom: 'datadog-metrics', version: '1.latest', inputs: [
             site: 'datadoghq.com',
             apiVersion: 'auto',
             metricPrefix: 'jenkins.job'

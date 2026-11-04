@@ -15,7 +15,7 @@ pipeline {
 
     stage('mail') {
       steps {
-        runAtom(atom: 'mail', version: '2.0.0', inputs: [
+        runAtom(atom: 'mail', version: '2.latest', inputs: [
             to: '<填:收件人（逗号分隔，支持 ${ENV}）>',
             smtpHost: '<填:SMTP 主机>',
             subject: '[Jenkins] $PROJECT_NAME #$BUILD_NUMBER - $BUILD_STATUS'

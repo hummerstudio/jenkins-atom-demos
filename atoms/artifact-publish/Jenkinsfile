@@ -15,7 +15,7 @@ pipeline {
 
     stage('artifact-publish') {
       steps {
-        runAtom(atom: 'artifact-publish', version: '1.0.1', inputs: [
+        runAtom(atom: 'artifact-publish', version: '1.latest', inputs: [
             provider: 'artifactory',
             files: '**/*.jar',
             pathTemplate: '{name}'

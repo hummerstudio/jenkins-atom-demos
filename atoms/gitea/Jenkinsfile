@@ -15,7 +15,7 @@ pipeline {
 
     stage('gitea') {
       steps {
-        runAtom(atom: 'gitea', version: '1.0.0', inputs: [
+        runAtom(atom: 'gitea', version: '1.latest', inputs: [
             action: 'status',
             context: 'jenkins/atom',
             pendingDescription: 'Build started...'

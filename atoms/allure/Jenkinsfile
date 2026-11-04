@@ -15,7 +15,7 @@ pipeline {
 
     stage('allure') {
       steps {
-        runAtom(atom: 'allure', version: '1.1.0', inputs: [
+        runAtom(atom: 'allure', version: '1.latest', inputs: [
             resultsDir: 'allure-results',
             reportDir: 'out/allure',
             title: 'Allure report'

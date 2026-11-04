@@ -15,7 +15,7 @@ pipeline {
 
     stage('influxdb') {
       steps {
-        runAtom(atom: 'influxdb', version: '1.0.0', inputs: [
+        runAtom(atom: 'influxdb', version: '1.latest', inputs: [
             apiVersion: 'auto',
             measurementName: 'jenkins_data',
             projectPath: '${JOB_NAME}'

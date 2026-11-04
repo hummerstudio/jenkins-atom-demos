@@ -15,7 +15,7 @@ pipeline {
 
     stage('python-env') {
       steps {
-        runAtom(atom: 'python-env', version: '1.0.0', inputs: [
+        runAtom(atom: 'python-env', version: '1.latest', inputs: [
             venv: '.venv'
           ])
       }

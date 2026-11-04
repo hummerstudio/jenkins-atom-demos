@@ -15,7 +15,7 @@ pipeline {
 
     stage('aws-lambda-invoke') {
       steps {
-        runAtom(atom: 'aws-lambda-invoke', version: '1.0.0',
+        runAtom(atom: 'aws-lambda-invoke', version: '1.latest',
           continueOnError: true)
       }
     }

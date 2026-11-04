@@ -15,7 +15,7 @@ pipeline {
 
     stage('git-checkout') {
       steps {
-        runAtom(atom: 'git-checkout', version: '1.1.0', inputs: [
+        runAtom(atom: 'git-checkout', version: '1.latest', inputs: [
             targetDir: '.',
             url: 'file:///Users/tangming/Codes/jenkins-atom-demos',
             branch: 'main'

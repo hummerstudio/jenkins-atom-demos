@@ -15,7 +15,7 @@ pipeline {
 
     stage('splunk-devops') {
       steps {
-        runAtom(atom: 'splunk-devops', version: '1.0.0', inputs: [
+        runAtom(atom: 'splunk-devops', version: '1.latest', inputs: [
             eventKind: 'job_event',
             jobEventType: 'completed',
             jobName: '${JOB_NAME}'

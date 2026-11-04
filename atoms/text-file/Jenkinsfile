@@ -15,7 +15,7 @@ pipeline {
 
     stage('text-file') {
       steps {
-        runAtom(atom: 'text-file', version: '1.0.0', inputs: [
+        runAtom(atom: 'text-file', version: '1.latest', inputs: [
             option: 'overwrite',
             lineSeparator: 'platform',
             path: 'notes.txt',

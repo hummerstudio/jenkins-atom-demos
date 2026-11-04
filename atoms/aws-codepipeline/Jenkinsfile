@@ -15,7 +15,7 @@ pipeline {
 
     stage('aws-codepipeline') {
       steps {
-        runAtom(atom: 'aws-codepipeline', version: '1.0.0', inputs: [
+        runAtom(atom: 'aws-codepipeline', version: '1.latest', inputs: [
             action: 'start',
             result: 'success',
             summary: 'Finished'

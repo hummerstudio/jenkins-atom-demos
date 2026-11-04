@@ -15,7 +15,7 @@ pipeline {
 
     stage('env-injector') {
       steps {
-        runAtom(atom: 'env-injector', version: '1.0.0', inputs: [
+        runAtom(atom: 'env-injector', version: '1.latest', inputs: [
             files: '.env'
           ])
       }

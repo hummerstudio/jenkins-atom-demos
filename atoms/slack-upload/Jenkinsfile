@@ -15,7 +15,7 @@ pipeline {
 
     stage('slack-upload') {
       steps {
-        runAtom(atom: 'slack-upload', version: '1.0.0', inputs: [
+        runAtom(atom: 'slack-upload', version: '1.latest', inputs: [
             apiUrl: 'https://slack.com/api'
           ],
           continueOnError: true)
