@@ -2,10 +2,16 @@
 <report>
   <metaData>
     <project>demo</project>
+    <issueCategories>
+      <category id="arch" name="Architecture"/>
+    </issueCategories>
+    <issueTypes>
+      <issueType id="cycle" name="Cycle" severity="Error" category="arch"/>
+    </issueTypes>
+    <metricIds>
+      <metricId id="NCCD" name="NCCD"/>
+    </metricIds>
   </metaData>
-  <issueTypes>
-    <issueType id="cycle" name="Cycle" category="Architecture" severity="Error"/>
-  </issueTypes>
   <analyzer>
     <issues/>
   </analyzer>
