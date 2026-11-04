@@ -9,6 +9,7 @@ pipeline {
       steps {
         sh 'cp -R atoms/_shared/fixtures/. .'
         sh 'if [ -d atoms/splunk-devops/fixtures ]; then cp -R atoms/splunk-devops/fixtures/. .; fi'
+
       }
     }
 

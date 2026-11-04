@@ -9,6 +9,7 @@ pipeline {
       steps {
         sh 'cp -R atoms/_shared/fixtures/. .'
         sh 'if [ -d atoms/git-push/fixtures ]; then cp -R atoms/git-push/fixtures/. .; fi'
+        sh 'git checkout -B main'
       }
     }
 

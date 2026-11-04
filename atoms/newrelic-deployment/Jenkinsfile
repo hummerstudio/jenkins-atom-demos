@@ -9,6 +9,7 @@ pipeline {
       steps {
         sh 'cp -R atoms/_shared/fixtures/. .'
         sh 'if [ -d atoms/newrelic-deployment/fixtures ]; then cp -R atoms/newrelic-deployment/fixtures/. .; fi'
+
       }
     }
 

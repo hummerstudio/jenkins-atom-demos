@@ -1,0 +1,21 @@
+[
+  {
+    "uri": "features/demo.feature",
+    "id": "demo",
+    "keyword": "Feature",
+    "name": "Demo",
+    "elements": [
+      {
+        "id": "demo;passes",
+        "keyword": "Scenario",
+        "name": "passes",
+        "type": "scenario",
+        "steps": [
+          {"keyword": "Given ", "name": "a thing", "result": {"status": "passed", "duration": 1000000}},
+          {"keyword": "Then ", "name": "it works", "result": {"status": "passed", "duration": 2000000}}
+        ],
+        "tags": []
+      }
+    ]
+  }
+]

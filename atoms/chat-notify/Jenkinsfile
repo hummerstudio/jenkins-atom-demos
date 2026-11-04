@@ -9,6 +9,7 @@ pipeline {
       steps {
         sh 'cp -R atoms/_shared/fixtures/. .'
         sh 'if [ -d atoms/chat-notify/fixtures ]; then cp -R atoms/chat-notify/fixtures/. .; fi'
+
       }
     }
 

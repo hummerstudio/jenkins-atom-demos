@@ -9,13 +9,14 @@ pipeline {
       steps {
         sh 'cp -R atoms/_shared/fixtures/. .'
         sh 'if [ -d atoms/cucumber/fixtures ]; then cp -R atoms/cucumber/fixtures/. .; fi'
+
       }
     }
 
     stage('cucumber') {
       steps {
         runAtom(atom: 'cucumber', version: '1.0.0', inputs: [
-            pattern: '**/cucumber.json, **/*cucumber*.json, **/target/cucumbers/*.json'
+            pattern: '**/cucumber.json'
           ])
       }
     }

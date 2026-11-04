@@ -9,6 +9,7 @@ pipeline {
       steps {
         sh 'cp -R atoms/_shared/fixtures/. .'
         sh 'if [ -d atoms/ansible-run/fixtures ]; then cp -R atoms/ansible-run/fixtures/. .; fi'
+
       }
     }
 

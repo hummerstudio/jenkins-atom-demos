@@ -9,13 +9,14 @@ pipeline {
       steps {
         sh 'cp -R atoms/_shared/fixtures/. .'
         sh 'if [ -d atoms/log-parser/fixtures ]; then cp -R atoms/log-parser/fixtures/. .; fi'
+
       }
     }
 
     stage('log-parser') {
       steps {
         runAtom(atom: 'log-parser', version: '1.0.0', inputs: [
-            source: 'buildLog',
+            source: 'file:build.log',
             rules: '{"error": "ERROR|Exception"}'
           ])
       }

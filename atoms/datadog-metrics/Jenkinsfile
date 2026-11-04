@@ -9,6 +9,7 @@ pipeline {
       steps {
         sh 'cp -R atoms/_shared/fixtures/. .'
         sh 'if [ -d atoms/datadog-metrics/fixtures ]; then cp -R atoms/datadog-metrics/fixtures/. .; fi'
+
       }
     }
 

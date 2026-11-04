@@ -9,6 +9,7 @@ pipeline {
       steps {
         sh 'cp -R atoms/_shared/fixtures/. .'
         sh 'if [ -d atoms/bitbucket-cloud-status/fixtures ]; then cp -R atoms/bitbucket-cloud-status/fixtures/. .; fi'
+
       }
     }
 

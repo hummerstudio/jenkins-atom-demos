@@ -9,13 +9,14 @@ pipeline {
       steps {
         sh 'cp -R atoms/_shared/fixtures/. .'
         sh 'if [ -d atoms/html/fixtures ]; then cp -R atoms/html/fixtures/. .; fi'
+
       }
     }
 
     stage('html') {
       steps {
         runAtom(atom: 'html', version: '1.2.0', inputs: [
-            path: '<填:报告目录（workspace 相对路径，如 out/coverage）>',
+            path: 'out/coverage',
             index: 'index.html'
           ])
       }

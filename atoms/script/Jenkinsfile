@@ -9,13 +9,15 @@ pipeline {
       steps {
         sh 'cp -R atoms/_shared/fixtures/. .'
         sh 'if [ -d atoms/script/fixtures ]; then cp -R atoms/script/fixtures/. .; fi'
+
       }
     }
 
     stage('script') {
       steps {
         runAtom(atom: 'script', version: '1.1.1', inputs: [
-            interpreter: 'sh'
+            interpreter: 'sh',
+            script: 'echo hello from the script atom'
           ])
       }
     }

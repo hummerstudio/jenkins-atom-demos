@@ -9,13 +9,16 @@ pipeline {
       steps {
         sh 'cp -R atoms/_shared/fixtures/. .'
         sh 'if [ -d atoms/git-checkout/fixtures ]; then cp -R atoms/git-checkout/fixtures/. .; fi'
+
       }
     }
 
     stage('git-checkout') {
       steps {
         runAtom(atom: 'git-checkout', version: '1.1.0', inputs: [
-            targetDir: '.'
+            targetDir: '.',
+            url: 'file:///Users/tangming/Codes/jenkins-atom-demos',
+            branch: 'main'
           ])
       }
     }

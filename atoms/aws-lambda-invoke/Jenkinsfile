@@ -9,6 +9,7 @@ pipeline {
       steps {
         sh 'cp -R atoms/_shared/fixtures/. .'
         sh 'if [ -d atoms/aws-lambda-invoke/fixtures ]; then cp -R atoms/aws-lambda-invoke/fixtures/. .; fi'
+
       }
     }
 

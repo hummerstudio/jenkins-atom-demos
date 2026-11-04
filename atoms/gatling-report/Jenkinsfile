@@ -9,13 +9,14 @@ pipeline {
       steps {
         sh 'cp -R atoms/_shared/fixtures/. .'
         sh 'if [ -d atoms/gatling-report/fixtures ]; then cp -R atoms/gatling-report/fixtures/. .; fi'
+
       }
     }
 
     stage('gatling-report') {
       steps {
         runAtom(atom: 'gatling-report', version: '1.0.0', inputs: [
-            pattern: '**/global_stats.json, **/simulation.log'
+            pattern: '**/simulation.log'
           ])
       }
     }

@@ -9,13 +9,16 @@ pipeline {
       steps {
         sh 'cp -R atoms/_shared/fixtures/. .'
         sh 'if [ -d atoms/text-finder/fixtures ]; then cp -R atoms/text-finder/fixtures/. .; fi'
+
       }
     }
 
     stage('text-finder') {
       steps {
         runAtom(atom: 'text-finder', version: '1.1.0', inputs: [
-            buildResult: 'FAILURE'
+            buildResult: 'FAILURE',
+            regexp: 'ERROR',
+            fileSet: 'build.log'
           ])
       }
     }

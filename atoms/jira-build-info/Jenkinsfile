@@ -9,6 +9,7 @@ pipeline {
       steps {
         sh 'cp -R atoms/_shared/fixtures/. .'
         sh 'if [ -d atoms/jira-build-info/fixtures ]; then cp -R atoms/jira-build-info/fixtures/. .; fi'
+
       }
     }
 

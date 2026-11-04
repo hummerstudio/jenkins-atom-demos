@@ -9,13 +9,15 @@ pipeline {
       steps {
         sh 'cp -R atoms/_shared/fixtures/. .'
         sh 'if [ -d atoms/build-time-blame/fixtures ]; then cp -R atoms/build-time-blame/fixtures/. .; fi'
+
       }
     }
 
     stage('build-time-blame') {
       steps {
         runAtom(atom: 'build-time-blame', version: '1.0.0', inputs: [
-            timestampFormat: 'elapsedMillis'
+            timestampFormat: 'elapsedMillis',
+            logFile: 'build-with-timestamps.log'
           ])
       }
     }

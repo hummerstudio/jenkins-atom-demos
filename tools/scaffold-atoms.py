@@ -40,6 +40,29 @@ SERVICE = {
 
 NOT_INFORMATIVE = {"timeoutSeconds", "label", "outputDir", "failOnError", "dryRun", "verbose"}
 
+# Per-atom test inputs and setup. Everything here is data: the Jenkinsfile that uses it is committed next to it.
+OVERRIDES: dict[str, dict] = {
+    "build-time-blame": {"inputs": {"logFile": "build-with-timestamps.log"}},
+    "cucumber": {"inputs": {"pattern": "**/cucumber.json"}},
+    "dependency-check": {"inputs": {"pattern": "**/dependency-check-report.xml"}},
+    "file-ops": {"inputs": {"operation": "copy", "pattern": "dist/*.jar", "target": "out/copied"}},
+    "gatling-report": {"inputs": {"pattern": "**/simulation.log"}},
+    "git-checkout": {"inputs": {"url": "file:///Users/tangming/Codes/jenkins-atom-demos", "branch": "main"}},
+    "git": {"prelude": ["git checkout -B main"]},
+    "git-push": {"prelude": ["git checkout -B main"]},
+    "git-changelog": {"prelude": ["git checkout -B main"]},
+    "html": {"inputs": {"path": "out/coverage"}},
+    "log-parser": {"inputs": {"source": "file:build.log"}},
+    "robot": {"inputs": {"pattern": "**/output.xml"}},
+    "script": {"inputs": {"interpreter": "sh", "script": "echo hello from the script atom"}},
+    "sonargraph": {"inputs": {"reportPath": "target/sonargraph/sonargraph.xml"}},
+    "text-file": {"inputs": {"option": "create", "path": "notes.txt", "content": "hello"}},
+    "text-finder": {"inputs": {"regexp": "ERROR", "fileSet": "build.log"}},
+}
+
+# Needs a service that is not on this machine at all: the failure is expected and is recorded, not fatal.
+SERVICE |= {"deploy-war", "mail-ext", "python-build"}
+
 
 def atoms() -> dict[str, dict]:
     found: dict[str, dict] = {}
@@ -84,6 +107,8 @@ def inputs_of(task: dict) -> dict[str, str]:
 
 def jenkinsfile(code: str, task: dict) -> str:
     params = inputs_of(task)
+    params.update(OVERRIDES.get(code, {}).get("inputs", {}))
+    prelude = OVERRIDES.get(code, {}).get("prelude", [])
     call = f"runAtom(atom: {groovy(code)}, version: {groovy(task.get('version') or '')}"
     if params:
         call += ", inputs: [\n            " + ",\n            ".join(f"{k}: {groovy(v)}" for k, v in params.items()) + "\n          ]"
@@ -92,6 +117,7 @@ def jenkinsfile(code: str, task: dict) -> str:
     call += ")"
     note = ("// 这个原子要外部服务/凭据：失败会被记录，流水线保持成功（continueOnError）。"
             if code in SERVICE else "// 原子失败即构建失败。")
+    prelude_steps = "".join(f"        sh '{line}'\n" for line in prelude).rstrip("\n")
     return f"""// {code} @ {task.get('version')} — 生成的测试流水线，fixtures 在 atoms/_shared/fixtures
 {note}
 pipeline {{
@@ -103,6 +129,7 @@ pipeline {{
       steps {{
         sh 'cp -R atoms/_shared/fixtures/. .'
         sh 'if [ -d atoms/{code}/fixtures ]; then cp -R atoms/{code}/fixtures/. .; fi'
+{prelude_steps}
       }}
     }}
 

@@ -9,6 +9,7 @@ pipeline {
       steps {
         sh 'cp -R atoms/_shared/fixtures/. .'
         sh 'if [ -d atoms/maven-resolve/fixtures ]; then cp -R atoms/maven-resolve/fixtures/. .; fi'
+
       }
     }
 

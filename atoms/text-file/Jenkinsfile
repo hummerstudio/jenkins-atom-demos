@@ -9,14 +9,17 @@ pipeline {
       steps {
         sh 'cp -R atoms/_shared/fixtures/. .'
         sh 'if [ -d atoms/text-file/fixtures ]; then cp -R atoms/text-file/fixtures/. .; fi'
+
       }
     }
 
     stage('text-file') {
       steps {
         runAtom(atom: 'text-file', version: '1.0.0', inputs: [
-            option: 'appendToEnd',
-            lineSeparator: 'platform'
+            option: 'create',
+            lineSeparator: 'platform',
+            path: 'notes.txt',
+            content: 'hello'
           ])
       }
     }

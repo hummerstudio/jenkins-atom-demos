@@ -9,6 +9,7 @@ pipeline {
       steps {
         sh 'cp -R atoms/_shared/fixtures/. .'
         sh 'if [ -d atoms/sonargraph/fixtures ]; then cp -R atoms/sonargraph/fixtures/. .; fi'
+
       }
     }
 
@@ -16,7 +17,7 @@ pipeline {
       steps {
         runAtom(atom: 'sonargraph', version: '1.0.0', inputs: [
             action: 'report',
-            reportPath: './target/sonargraph/sonargraph-report.xml',
+            reportPath: 'target/sonargraph/sonargraph.xml',
             architectureViolationsAction: 'nothing'
           ])
       }
