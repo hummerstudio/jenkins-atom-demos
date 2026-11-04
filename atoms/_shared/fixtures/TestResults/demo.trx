@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestRun xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Results><UnitTestResult testName="Passes" outcome="Passed" duration="00:00:00.012"/></Results>
+</TestRun>

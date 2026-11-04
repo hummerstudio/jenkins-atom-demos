@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.0" generated="2026-11-04T10:00:00" rpa="false">
+  <suite id="s1" name="Demo"><test id="s1-t1" name="Passes"><status status="PASS"/></test></suite>
+</robot>

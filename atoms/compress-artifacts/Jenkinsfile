@@ -1,0 +1,24 @@
+// compress-artifacts @ 1.0.1 — 生成的测试流水线，fixtures 在 atoms/_shared/fixtures
+// 原子失败即构建失败。
+pipeline {
+  agent any
+  options { timeout(time: 5, unit: 'MINUTES') }
+
+  stages {
+    stage('fixtures') {
+      steps {
+        sh 'cp -R atoms/_shared/fixtures/. .'
+        sh 'if [ -d atoms/compress-artifacts/fixtures ]; then cp -R atoms/compress-artifacts/fixtures/. .; fi'
+      }
+    }
+
+    stage('compress-artifacts') {
+      steps {
+        runAtom(atom: 'compress-artifacts', version: '1.0.1', inputs: [
+            patterns: '**/*',
+            outputFile: 'artifacts.zip'
+          ])
+      }
+    }
+  }
+}

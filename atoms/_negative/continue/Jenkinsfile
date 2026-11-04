@@ -1,0 +1,15 @@
+// continueOnError：同一个失败，流水线保持成功，失败仍然被记录。
+pipeline {
+  agent any
+  stages {
+    stage('a failing atom, continued') {
+      steps {
+        runAtom(atom: 'script', version: '1.1.1', inputs: [interpreter: 'sh', script: 'exit 3'],
+                continueOnError: true)
+      }
+    }
+    stage('after') {
+      steps { echo 'the pipeline kept going' }
+    }
+  }
+}

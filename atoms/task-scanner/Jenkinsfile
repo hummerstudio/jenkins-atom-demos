@@ -1,0 +1,25 @@
+// task-scanner @ 1.0.0 — 生成的测试流水线，fixtures 在 atoms/_shared/fixtures
+// 原子失败即构建失败。
+pipeline {
+  agent any
+  options { timeout(time: 5, unit: 'MINUTES') }
+
+  stages {
+    stage('fixtures') {
+      steps {
+        sh 'cp -R atoms/_shared/fixtures/. .'
+        sh 'if [ -d atoms/task-scanner/fixtures ]; then cp -R atoms/task-scanner/fixtures/. .; fi'
+      }
+    }
+
+    stage('task-scanner') {
+      steps {
+        runAtom(atom: 'task-scanner', version: '1.0.0', inputs: [
+            includes: '**/*.java, **/*.kt, **/*.js, **/*.ts, **/*.py, **/*.go, **/*.rs, **/*.c, **/*.cpp, **/*.h, **/*.sh, **/*.rb, **/*.php, **/*.cs',
+            excludes: '**/target/**, **/build/**, **/node_modules/**, **/.git/**, **/dist/**, **/out/**',
+            markers: 'TODO, FIXME, XXX, HACK'
+          ])
+      }
+    }
+  }
+}

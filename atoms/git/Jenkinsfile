@@ -1,0 +1,25 @@
+// git @ 1.0.0 — 生成的测试流水线，fixtures 在 atoms/_shared/fixtures
+// 原子失败即构建失败。
+pipeline {
+  agent any
+  options { timeout(time: 5, unit: 'MINUTES') }
+
+  stages {
+    stage('fixtures') {
+      steps {
+        sh 'cp -R atoms/_shared/fixtures/. .'
+        sh 'if [ -d atoms/git/fixtures ]; then cp -R atoms/git/fixtures/. .; fi'
+      }
+    }
+
+    stage('git') {
+      steps {
+        runAtom(atom: 'git', version: '1.0.0', inputs: [
+            action: 'push',
+            gitBinary: 'git',
+            remote: 'origin'
+          ])
+      }
+    }
+  }
+}

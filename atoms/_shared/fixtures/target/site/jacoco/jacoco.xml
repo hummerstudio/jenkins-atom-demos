@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report name="demo"><counter type="LINE" missed="1" covered="9"/><counter type="BRANCH" missed="0" covered="4"/></report>

@@ -1,0 +1,23 @@
+// cucumber @ 1.0.0 — 生成的测试流水线，fixtures 在 atoms/_shared/fixtures
+// 原子失败即构建失败。
+pipeline {
+  agent any
+  options { timeout(time: 5, unit: 'MINUTES') }
+
+  stages {
+    stage('fixtures') {
+      steps {
+        sh 'cp -R atoms/_shared/fixtures/. .'
+        sh 'if [ -d atoms/cucumber/fixtures ]; then cp -R atoms/cucumber/fixtures/. .; fi'
+      }
+    }
+
+    stage('cucumber') {
+      steps {
+        runAtom(atom: 'cucumber', version: '1.0.0', inputs: [
+            pattern: '**/cucumber.json, **/*cucumber*.json, **/target/cucumbers/*.json'
+          ])
+      }
+    }
+  }
+}

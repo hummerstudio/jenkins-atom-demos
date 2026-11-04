@@ -1,0 +1,3 @@
+<project name="demo" default="build">
+  <target name="build"><echo>ant build ok</echo></target>
+</project>

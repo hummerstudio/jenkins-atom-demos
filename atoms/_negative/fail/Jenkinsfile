@@ -1,0 +1,11 @@
+// 失败必须让构建失败：没有 continueOnError 时，原子失败 = 流水线失败。
+pipeline {
+  agent any
+  stages {
+    stage('a failing atom') {
+      steps {
+        runAtom(atom: 'script', version: '1.1.1', inputs: [interpreter: 'sh', script: 'exit 3'])
+      }
+    }
+  }
+}

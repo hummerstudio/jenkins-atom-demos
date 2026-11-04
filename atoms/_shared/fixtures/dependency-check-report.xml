@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysis xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
+  <scanInfo><engineVersion>1.0</engineVersion></scanInfo>
+  <projectInfo><name>demo</name></projectInfo>
+  <dependencies/>
+</analysis>

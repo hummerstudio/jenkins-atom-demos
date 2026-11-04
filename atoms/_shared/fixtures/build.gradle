@@ -1,0 +1,1 @@
+tasks.register('build') { doLast { println 'gradle build ok' } }
