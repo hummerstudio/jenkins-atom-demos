@@ -1,13 +1,16 @@
 pipeline {
   agent any
   stages {
-    stage('test') {
-      steps {
-        runAtom(atom: 'node', inputs: [command: 'npm test'])
-        runAtom(atom: 'junit-report', inputs: [testResults: 'reports/junit.xml'])
-        runAtom(atom: 'node', inputs: [command: 'npm run build'])
-        runAtom(atom: 'zip-artifacts', inputs: [operation: 'zip', archive: 'out/dist.zip', includes: 'dist/**'])
-      }
+    stage('build and test') {
+      steps { dir('stacks/node-tap') {
+        runAtom(atom: 'node', version: '1.latest', inputs: [command: 'npm run build && npm test'])
+      } }
+    }
+    stage('report') {
+      steps { dir('stacks/node-tap') {
+        runAtom(atom: 'junit', version: '1.latest',
+                inputs: [testResults: 'reports/junit.xml', label: 'Node 单元测试'])
+      } }
     }
   }
 }

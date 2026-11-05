@@ -1,13 +1,19 @@
 pipeline {
   agent any
   stages {
-    stage('test') {
-      steps {
-        runAtom(atom: 'python-env', inputs: [requirements: 'requirements.txt'])
-        runAtom(atom: 'python-env', inputs: [command: 'python -m pytest'])
-        runAtom(atom: 'junit-report', inputs: [testResults: 'reports/junit.xml'])
-        runAtom(atom: 'files-tool', inputs: [operation: 'find', pattern: 'src/**/*.py'])
-      }
+    stage('build and test') {
+      steps { dir('stacks/python-pytest') {
+        runAtom(atom: 'script', version: '1.latest', inputs: [
+          interpreter: 'sh',
+          script: 'set -eu\npython3 -m pip install --user -q -r requirements.txt\nmkdir -p reports\npython3 -m pytest -q --junitxml=reports/junit.xml'
+        ])
+      } }
+    }
+    stage('report') {
+      steps { dir('stacks/python-pytest') {
+        runAtom(atom: 'junit', version: '1.latest',
+                inputs: [testResults: 'reports/junit.xml', label: 'Python 单元测试'])
+      } }
     }
   }
 }

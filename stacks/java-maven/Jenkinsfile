@@ -1,12 +1,23 @@
 pipeline {
   agent any
   stages {
-    stage('build') {
-      steps {
-        runAtom(atom: 'maven', inputs: [goals: 'clean verify', home: '/opt/maven'])
-        runAtom(atom: 'junit-report', inputs: [testResults: '**/surefire-reports/TEST-*.xml'])
-        runAtom(atom: 'artifact-size', inputs: [pattern: '**/target/*.jar', maxMb: '50'])
-      }
+    stage('build and test') {
+      steps { dir('stacks/java-maven') {
+        runAtom(atom: 'maven', version: '1.latest', inputs: [goals: 'clean verify', options: '-B -ntp'])
+      } }
+    }
+    stage('report') {
+      steps { dir('stacks/java-maven') {
+        runAtom(atom: 'junit', version: '1.latest',
+                inputs: [testResults: 'target/surefire-reports/TEST-*.xml', label: 'Java 单元测试'])
+        runAtom(atom: 'coverage', version: '1.latest',
+                inputs: [pattern: 'target/site/jacoco/jacoco.xml', label: 'Java 覆盖率', minLine: '0'])
+      } }
+    }
+    stage('gate') {
+      steps { dir('stacks/java-maven') {
+        runAtom(atom: 'artifact-size', version: '1.latest', inputs: [pattern: 'target/*.jar', maxMb: '50'])
+      } }
     }
   }
 }

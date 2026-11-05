@@ -2,11 +2,21 @@ pipeline {
   agent any
   stages {
     stage('build and test') {
-      steps {
-        runAtom(atom: 'cmake-build', inputs: [buildType: 'Debug', runTests: 'true',
-                                              testArgs: '--output-junit reports/ctest.xml'])
-        runAtom(atom: 'junit-report', inputs: [testResults: 'build/reports/ctest.xml'])
-      }
+      steps { dir('stacks/cpp-cmake') {
+        runAtom(atom: 'cmake-build', version: '1.latest', inputs: [
+          source: '.', buildDir: 'build', buildType: 'Debug'
+        ])
+        runAtom(atom: 'script', version: '1.latest', inputs: [
+          interpreter: 'sh',
+          script: 'mkdir -p reports && ctest --test-dir build --output-on-failure --output-junit reports/ctest.xml'
+        ])
+      } }
+    }
+    stage('report') {
+      steps { dir('stacks/cpp-cmake') {
+        runAtom(atom: 'junit', version: '1.latest',
+                inputs: [testResults: 'reports/ctest.xml', label: 'C++ 单元测试'])
+      } }
     }
   }
 }
