@@ -8,7 +8,7 @@ pipeline {
         ])
         runAtom(atom: 'script', version: '1.latest', inputs: [
           interpreter: 'sh',
-          script: 'mkdir -p reports && ctest --test-dir build --output-on-failure --output-junit reports/ctest.xml'
+          script: 'mkdir -p reports && ctest --test-dir build --output-on-failure --output-junit "$PWD/reports/ctest.xml"'
         ])
       } }
     }

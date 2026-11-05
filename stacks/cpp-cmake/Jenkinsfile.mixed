@@ -9,7 +9,7 @@ pipeline {
         dir('stacks/cpp-cmake') {
           sh 'cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug'
           sh 'cmake --build build -j 4'
-          sh 'mkdir -p reports && ctest --test-dir build --output-on-failure --output-junit reports/ctest.xml'
+          sh 'mkdir -p reports && ctest --test-dir build --output-on-failure --output-junit "$PWD/reports/ctest.xml"'
           runAtom(atom: 'junit', version: '1.latest', inputs: [testResults: 'reports/ctest.xml'])
         }
       }
