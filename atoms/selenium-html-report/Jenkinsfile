@@ -5,6 +5,13 @@ pipeline {
   options { timeout(time: 5, unit: 'MINUTES') }
 
   stages {
+    stage('准备') {
+      steps {
+        writeFile file: 'target/index.html', text: '''<html><body><h1>TestNG</h1><table><tr><td>demo.SampleTest</td><td>passed</td></tr></table></body></html>
+'''
+      }
+    }
+
     stage('selenium-html-report') {
       steps {
         runAtom(atom: 'selenium-html-report', version: '1.latest', inputs: [
