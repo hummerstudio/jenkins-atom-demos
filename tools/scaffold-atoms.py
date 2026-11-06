@@ -105,36 +105,45 @@ def atoms() -> dict[str, dict]:
 # A few atoms read a project the fixture set has to provide first; the rest declare their file in task.json and are
 # picked up by needs() below. Both lists stay explicit so a missing fixture is a review comment, not a mystery.
 EXTRA_NEEDS: dict[str, list[str]] = {
+    # build tools: the project file each one needs to have something to do
     "maven": ["pom.xml"],
     "maven-resolve": ["pom.xml"],
     "ant": ["build.xml"],
     "gradle": ["settings.gradle", "build.gradle"],
     "sbt": ["build.sbt", "project/build.properties"],
-    "junit": ["target/surefire-reports/TEST-demo.SampleTest.xml"],
-    "jmeter": ["results.jtl"],
     "cmake-build": ["CMakeLists.txt", "hello.c"],
-    "tap": ["results/demo.tap"],
+    "jmeter": ["results.jtl"],
+    # report readers: the file each one parses
+    "checkstyle": ["target/checkstyle-result.xml"],
+    "coverage": ["coverage.xml", "lcov.info", "target/site/jacoco/jacoco.xml"],
+    "violations": ["target/checkstyle-result.xml"],
+    "warnings": ["build.log"],
+    "html": ["out/coverage/index.html"],
+    "cucumber": ["cucumber.json"],
+    "testng": ["testng-results.xml"],
+    "junit": ["target/surefire-reports/TEST-demo.SampleTest.xml"],
     "xunit": ["TestResults/demo.trx"],
+    "tap": ["results/demo.tap"],
     "allure": ["allure-results/demo-result.json"],
-    "file-ops": ["dist/demo.jar"],
+    "dependency-check": ["dependency-check-report.xml"],
+    "gatling-report": ["simulation.log"],
+    "robot": ["output.xml"],
+    "sonargraph": ["target/sonargraph/sonargraph-report.xml"],
+    "selenium-html-report": ["target/index.html"],
+    # everything else that reads a file
     "build-time-blame": ["build-time.log"],
     "log-parser": ["clean.log"],
     "text-finder": ["build.log"],
-    "plot": ["data.csv"],
+    "file-ops": ["dist/demo.jar"],
     "env-injector": [".env"],
     "json-tool": ["package.json"],
+    "plot": ["data.csv"],
 }
 
 
 def needs(code: str, task: dict) -> list[str]:
-    """The fixture files this atom reads: what its task.json names, plus the project files a build tool expects."""
-    defaults = " ".join(str(spec.get("default", "")) for spec in (task.get("input") or {}).values()
-                        if isinstance(spec, dict))
-    found = {path.relative_to(FIXTURES).as_posix()
-             for path in FIXTURES.rglob("*")
-             if path.is_file() and (path.name in defaults or path.relative_to(FIXTURES).as_posix() in defaults)}
-    found.update(EXTRA_NEEDS.get(code, []))
-    return sorted(found)
+    """The fixture files this atom reads, from the table above — the only place that says so."""
+    return sorted(EXTRA_NEEDS.get(code, []))
 
 
 def groovy_block(path: str, text: str) -> str:

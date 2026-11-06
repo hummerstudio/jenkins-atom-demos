@@ -29,8 +29,6 @@ pipeline {
   }
 ]
 '''
-        writeFile file: 'reports/cucumber.json', text: '''[{"name":"demo","elements":[],"status":"passed"}]
-'''
       }
     }
 
