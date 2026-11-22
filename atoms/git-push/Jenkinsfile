@@ -8,6 +8,8 @@ pipeline {
     stage('准备') {
       steps {
         sh 'git checkout -B main'
+        // 每次从空仓库开始：上一次构建留下的 push-target.git 已有提交，浅克隆再推会被拒（shallow update not allowed）
+        sh 'rm -rf "$WORKSPACE/../push-target.git"'
         sh 'git init -q --bare "$WORKSPACE/../push-target.git"'
         sh 'git remote set-url origin "$WORKSPACE/../push-target.git"'
         sh 'git config user.email atom@example.com'
