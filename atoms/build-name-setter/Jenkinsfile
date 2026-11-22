@@ -1,4 +1,4 @@
-// build-name-setter @ 1.2.0 — 原子测试流水线；它需要的输入文件都写在这里
+// atom-basic-steps action=rename（原 build-name-setter 的同一动作）— 作业路径不变
 // 原子失败即构建失败。
 pipeline {
   agent any
@@ -7,7 +7,8 @@ pipeline {
   stages {
     stage('build-name-setter') {
       steps {
-        runAtom(atom: 'build-name-setter', version: '1.latest', inputs: [
+        runAtom(atom: 'atom-basic-steps', version: '1.latest', inputs: [
+            action: 'rename',
             displayName: '#${BUILD_NUMBER}'
           ])
       }
