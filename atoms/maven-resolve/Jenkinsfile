@@ -1,4 +1,4 @@
-// maven-resolve @ 1.0.0 — 原子测试流水线；它需要的输入文件都写在这里
+// maven action=resolve（原 maven-resolve） — 作业路径不变
 // 这个原子要外部服务/凭据：失败会被记录，流水线保持成功（continueOnError）。
 pipeline {
   agent any
@@ -24,7 +24,8 @@ pipeline {
 
     stage('maven-resolve') {
       steps {
-        runAtom(atom: 'maven-resolve', version: '1.latest', inputs: [
+        runAtom(atom: 'maven', version: '1.latest', inputs: [
+            action: 'resolve',
             localRepository: '.m2/repository',
             checksumPolicy: 'fail'
           ],

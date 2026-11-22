@@ -1,4 +1,4 @@
-// github-checks @ 1.0.0 — 原子测试流水线；它需要的输入文件都写在这里
+// github action=checks（原 github-checks） — 作业路径不变
 // 这个原子要外部服务/凭据：失败会被记录，流水线保持成功（continueOnError）。
 pipeline {
   agent any
@@ -7,7 +7,8 @@ pipeline {
   stages {
     stage('github-checks') {
       steps {
-        runAtom(atom: 'github-checks', version: '1.latest', inputs: [
+        runAtom(atom: 'github', version: '1.latest', inputs: [
+            action: 'checks',
             status: 'completed',
             apiUrl: 'https://api.github.com'
           ],

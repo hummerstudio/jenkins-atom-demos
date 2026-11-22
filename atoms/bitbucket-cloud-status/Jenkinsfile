@@ -1,4 +1,4 @@
-// bitbucket-cloud-status @ 1.0.0 — 原子测试流水线；它需要的输入文件都写在这里
+// bitbucket flavor=cloud（原 bitbucket-cloud-status） — 作业路径不变
 // 这个原子要外部服务/凭据：失败会被记录，流水线保持成功（continueOnError）。
 pipeline {
   agent any
@@ -7,7 +7,9 @@ pipeline {
   stages {
     stage('bitbucket-cloud-status') {
       steps {
-        runAtom(atom: 'bitbucket-cloud-status', version: '1.latest',
+        runAtom(atom: 'bitbucket', version: '1.latest', inputs: [
+            flavor: 'cloud'
+          ],
           continueOnError: true)
       }
     }
