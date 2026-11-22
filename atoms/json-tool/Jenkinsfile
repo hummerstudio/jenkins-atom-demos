@@ -1,4 +1,4 @@
-// json-tool @ 1.0.1 — 原子测试流水线；它需要的输入文件都写在这里
+// atom-basic-steps action=json（原 json-tool；path 改名 jsonPath） — 作业路径不变
 // 原子失败即构建失败。
 pipeline {
   agent any
@@ -14,7 +14,8 @@ pipeline {
 
     stage('json-tool') {
       steps {
-        runAtom(atom: 'json-tool', version: '1.latest', inputs: [
+        runAtom(atom: 'atom-basic-steps', version: '1.latest', inputs: [
+            action: 'json',
             operation: 'read',
             file: 'package.json'
           ])

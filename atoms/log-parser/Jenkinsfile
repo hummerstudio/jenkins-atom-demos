@@ -1,4 +1,4 @@
-// log-parser @ 1.0.0 — 原子测试流水线；它需要的输入文件都写在这里
+// atom-basic-steps action=parse-log（原 log-parser） — 作业路径不变
 // 原子失败即构建失败。
 pipeline {
   agent any
@@ -16,7 +16,8 @@ pipeline {
 
     stage('log-parser') {
       steps {
-        runAtom(atom: 'log-parser', version: '1.latest', inputs: [
+        runAtom(atom: 'atom-basic-steps', version: '1.latest', inputs: [
+            action: 'parse-log',
             source: 'clean.log',
             rules: '{"note": "WARN"}'
           ])

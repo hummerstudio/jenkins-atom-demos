@@ -1,4 +1,4 @@
-// file-ops @ 1.0.0 — 原子测试流水线；它需要的输入文件都写在这里
+// atom-basic-steps action=file-ops（原 file-ops；target 改名 dest） — 作业路径不变
 // 原子失败即构建失败。
 pipeline {
   agent any
@@ -14,10 +14,11 @@ pipeline {
 
     stage('file-ops') {
       steps {
-        runAtom(atom: 'file-ops', version: '1.latest', inputs: [
+        runAtom(atom: 'atom-basic-steps', version: '1.latest', inputs: [
+            action: 'file-ops',
             operation: 'copy',
             pattern: 'dist/*.jar',
-            target: 'out/copied'
+            dest: 'out/copied'
           ])
       }
     }

@@ -1,4 +1,4 @@
-// files-tool @ 1.2.0 — 原子测试流水线；它需要的输入文件都写在这里
+// atom-basic-steps action=files-list（原 files-tool；output 改名 checksumFile） — 作业路径不变
 // 原子失败即构建失败。
 pipeline {
   agent any
@@ -7,10 +7,11 @@ pipeline {
   stages {
     stage('files-tool') {
       steps {
-        runAtom(atom: 'files-tool', version: '1.latest', inputs: [
+        runAtom(atom: 'atom-basic-steps', version: '1.latest', inputs: [
+            action: 'files-list',
             operation: 'sha256',
             pattern: '**/*.jar',
-            output: 'checksums.sha256'
+            checksumFile: 'checksums.sha256'
           ])
       }
     }
