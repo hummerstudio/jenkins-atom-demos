@@ -1,13 +1,13 @@
-// mail-ext @ 1.0.0 — 原子测试流水线；它需要的输入文件都写在这里
+// mail（原 mail-ext 的输入）— 两个原子只差凭据参数名，mail 现在两种名字都认
 // 这个原子要外部服务/凭据：失败会被记录，流水线保持成功（continueOnError）。
 pipeline {
   agent any
   options { timeout(time: 5, unit: 'MINUTES') }
 
   stages {
-    stage('mail-ext') {
+    stage('mail (mail-ext inputs)') {
       steps {
-        runAtom(atom: 'mail-ext', version: '1.latest', inputs: [
+        runAtom(atom: 'mail', version: '2.latest', inputs: [
             from: 'jenkins@localhost',
             subject: '[Jenkins] $PROJECT_NAME #$BUILD_NUMBER - $BUILD_STATUS',
             body: 'Build: $BUILD_URL\nResult: $BUILD_STATUS\n\n$BUILD_LOG_EXCERPT\n\n$FAILED_TESTS'
