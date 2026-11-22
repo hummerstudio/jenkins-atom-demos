@@ -1,13 +1,13 @@
-// jira-build-info @ 1.0.0 — 原子测试流水线；它需要的输入文件都写在这里
+// jira action=build — 原子测试流水线；jira-build-info 已并入 jira（action build / deployment），作业路径不变
 // 这个原子要外部服务/凭据：失败会被记录，流水线保持成功（continueOnError）。
 pipeline {
   agent any
   options { timeout(time: 5, unit: 'MINUTES') }
 
   stages {
-    stage('jira-build-info') {
+    stage('jira build') {
       steps {
-        runAtom(atom: 'jira-build-info', version: '1.latest', inputs: [
+        runAtom(atom: 'jira', version: '1.latest', inputs: [
             action: 'build',
             projectName: '${JOB_NAME}',
             buildNumber: '${BUILD_NUMBER}'

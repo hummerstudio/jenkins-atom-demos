@@ -1,14 +1,14 @@
-// jira-issue @ 1.0.0 — 原子测试流水线；它需要的输入文件都写在这里
+// jira action=issue — 原子测试流水线；jira-issue 已并入 jira（create→issue），作业路径不变
 // 这个原子要外部服务/凭据：失败会被记录，流水线保持成功（continueOnError）。
 pipeline {
   agent any
   options { timeout(time: 5, unit: 'MINUTES') }
 
   stages {
-    stage('jira-issue') {
+    stage('jira issue') {
       steps {
-        runAtom(atom: 'jira-issue', version: '1.latest', inputs: [
-            action: 'create',
+        runAtom(atom: 'jira', version: '1.latest', inputs: [
+            action: 'issue',
             issueType: 'Task'
           ],
           continueOnError: true)
