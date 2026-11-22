@@ -1,4 +1,4 @@
-// zip-artifacts @ 1.0.0 — 原子测试流水线；它需要的输入文件都写在这里
+// atom-basic-steps action=zip（原 zip-artifacts）— 作业路径不变
 // 原子失败即构建失败。
 pipeline {
   agent any
@@ -7,8 +7,8 @@ pipeline {
   stages {
     stage('zip-artifacts') {
       steps {
-        runAtom(atom: 'zip-artifacts', version: '1.latest', inputs: [
-            operation: 'zip',
+        runAtom(atom: 'atom-basic-steps', version: '1.latest', inputs: [
+            action: 'zip',
             archive: 'artifacts.zip',
             includes: '**/*'
           ])
