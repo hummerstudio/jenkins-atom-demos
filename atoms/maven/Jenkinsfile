@@ -24,7 +24,8 @@ pipeline {
 
     stage('maven') {
       steps {
-        runAtom(atom: 'maven', version: '1.latest', inputs: [
+        runAtom(atom: 'build-tool', version: '1.latest', inputs: [
+            tool: 'maven',
             goals: 'verify'
           ])
       }
