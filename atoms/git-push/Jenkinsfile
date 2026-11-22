@@ -7,6 +7,8 @@ pipeline {
   stages {
     stage('准备') {
       steps {
+        // Jenkins 检出的是浅克隆，而浅克隆不能推给任何远端（shallow update not allowed）——先补全历史
+        sh 'git fetch --unshallow || true'
         sh 'git checkout -B main'
         // 每次从空仓库开始：上一次构建留下的 push-target.git 已有提交，浅克隆再推会被拒（shallow update not allowed）
         sh 'rm -rf "$WORKSPACE/../push-target.git"'
