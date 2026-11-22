@@ -55,7 +55,7 @@ OVERRIDES: dict[str, dict] = {
     "dependency-check": {"inputs": {"pattern": "**/dependency-check-report.xml"}},
     "file-ops": {"inputs": {"operation": "copy", "pattern": "dist/*.jar", "target": "out/copied"}},
     "gatling-report": {"inputs": {"pattern": "**/simulation.log"}},
-    "git-checkout": {"inputs": {"url": "file:///Users/tangming/Codes/jenkins-atom-demos", "branch": "main"}},
+    "git-checkout": {"inputs": {"url": "file:///Users/tangming/Codes/jenkins-atoms/jenkins-atom-demos", "branch": "main"}},
     "git": {"prelude": [
         "git checkout -B main",
         'git init -q --bare "$WORKSPACE/../push-target.git"',

@@ -1,4 +1,4 @@
-// git-push @ 1.0.0 — 原子测试流水线；它需要的输入文件都写在这里
+// git action=push — 原子测试流水线；git-push 已并入 git，作业路径保持不变
 // 原子失败即构建失败。
 pipeline {
   agent any
@@ -15,9 +15,10 @@ pipeline {
       }
     }
 
-    stage('git-push') {
+    stage('git push') {
       steps {
-        runAtom(atom: 'git-push', version: '1.latest', inputs: [
+        runAtom(atom: 'git', version: '1.latest', inputs: [
+            action: 'push',
             remote: 'origin'
           ])
       }

@@ -1,4 +1,4 @@
-// git-changelog @ 1.0.0 — 原子测试流水线；它需要的输入文件都写在这里
+// git action=changelog — 原子测试流水线；git-changelog 已并入 git，作业路径保持不变
 // 原子失败即构建失败。
 pipeline {
   agent any
@@ -11,9 +11,10 @@ pipeline {
       }
     }
 
-    stage('git-changelog') {
+    stage('git changelog') {
       steps {
-        runAtom(atom: 'git-changelog', version: '1.latest', inputs: [
+        runAtom(atom: 'git', version: '1.latest', inputs: [
+            action: 'changelog',
             until: 'HEAD',
             output: 'CHANGELOG.md'
           ])
