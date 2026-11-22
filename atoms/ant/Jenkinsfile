@@ -16,9 +16,7 @@ pipeline {
 
     stage('ant') {
       steps {
-        runAtom(atom: 'build-tool', version: '1.latest', inputs: [
-            tool: 'ant'
-          ])
+        runAtom(atom: 'ant', version: '1.latest')
       }
     }
   }
