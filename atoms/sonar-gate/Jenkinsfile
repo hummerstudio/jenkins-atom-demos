@@ -5,9 +5,10 @@ pipeline {
   options { timeout(time: 5, unit: 'MINUTES') }
 
   stages {
-    stage('sonar-gate') {
+    stage('sonar gate') {
       steps {
-        runAtom(atom: 'sonar-gate', version: '1.latest', inputs: [
+        runAtom(atom: 'sonar', version: '1.latest', inputs: [
+            action: 'gate',
             buildStatus: 'FAILURE'
           ],
           continueOnError: true)
