@@ -1,4 +1,4 @@
-// splunk-devops @ 1.0.0 — 原子测试流水线；它需要的输入文件都写在这里
+// splunk action=build（原 splunk-devops） — 作业路径不变
 // 这个原子要外部服务/凭据：失败会被记录，流水线保持成功（continueOnError）。
 pipeline {
   agent any
@@ -7,7 +7,8 @@ pipeline {
   stages {
     stage('splunk-devops') {
       steps {
-        runAtom(atom: 'splunk-devops', version: '1.latest', inputs: [
+        runAtom(atom: 'splunk', version: '1.latest', inputs: [
+            action: 'build',
             eventKind: 'job_event',
             jobEventType: 'completed',
             jobName: '${JOB_NAME}'
